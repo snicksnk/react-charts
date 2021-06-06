@@ -14,9 +14,16 @@ export interface ChartMargins {
   axisOffset: number
 }
 
+export interface ChartSizeParams {
+  size: Size
+  margin: ChartMargins
+}
+
 export interface Axis {
   leftYAxis: Selection<SVGGElement, unknown, null, undefined>,
   bottomXAxis: Selection<SVGGElement, unknown, null, undefined>
+  gridX: Selection<SVGGElement, unknown, null, undefined>,
+  gridY: Selection<SVGGElement, unknown, null, undefined>
 }
 
 export type Data<D> = Array<D>
