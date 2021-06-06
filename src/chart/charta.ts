@@ -1,8 +1,8 @@
 import { scaleLinear } from "d3-scale";
-import { min, max } from "d3-array";
 import { select } from "d3-selection";
 import { axisLeft, axisBottom } from "d3-axis";
-import { Axis, ChartCanvas, ChartLayout, ChartMargins, Data, Size, SVG } from "./types";
+import { Axis, ChartCanvas, ChartLayout, ChartMargins, createRange, Data, Size, SVG } from "./types";
+import { line } from "d3-shape";
 
 export function createChart(ref: HTMLDivElement, size: Size, margin: ChartMargins) {
   const { width, height } = size;
@@ -30,7 +30,9 @@ export function createChart(ref: HTMLDivElement, size: Size, margin: ChartMargin
   return { svg, chartCanvas, axis };
 }
 
-export function resizeChart(svg: SVG, chartCanvas: ChartCanvas, axis: Axis, data: Data<any>, size: Size, margin: ChartMargin) {
+export function resizeChart(chartLayout: ChartLayout, size: Size, margin: ChartMargins) {
+  const { svg, chartCanvas } = chartLayout;
+
   const { width, height } = size;
   svg.attr('width', width);
   svg.attr('height', height);
@@ -48,24 +50,19 @@ const calcChartSize = (size: Size, margin: ChartMargins) => {
   };
 };
 
-export function drawData(chartLayout: ChartLayout, data: Data<any>, size: Size, margin: ChartMargins) {
+
+
+export function drawData<D = Array<any>>(chartLayout: ChartLayout, data: D & Array<any>, createRange: createRange<any>, size: Size, margin: ChartMargins) {
   const { chartCanvas, axis } = chartLayout;
 
   const chartSize = calcChartSize(size, margin);
 
   const { width, height } = chartSize;
 
-  const minXVal = min(data.map(r => r.x));
-  const maxXVal = max(data.map(r => r.x));
+  const ranges = createRange(data);
 
-  const minYVal = min(data.map(r => r.y));
-  const maxYVal = max(data.map(r => r.y));
-
-  const xScale = scaleLinear().range([0, width]).domain([minXVal, maxXVal]);
-  const yScale = scaleLinear().range([height, 0]).domain([minYVal, maxYVal]);
-
-  debugger
-
+  const xScale = scaleLinear().range([0, width]).domain([ranges.x.min, ranges.x.max]);
+  const yScale = scaleLinear().range([height, 0]).domain([ranges.y.min, ranges.y.max]);
 
   // const ticks = xScale.ticks(5);
 
@@ -84,49 +81,44 @@ export function drawData(chartLayout: ChartLayout, data: Data<any>, size: Size, 
 
 
 
-  console.log(coords);
+  const circles = chartCanvas.selectAll<SVGGElement, D>(".dot").data(coords)
 
-  const circles = chartCanvas.selectAll(".dot").data(coords);
+  const lines = chartCanvas.selectAll<SVGPathElement, Array<D>>(".line").data([coords]);
 
-  const axisY = axisLeft(yScale).tickValues([minYVal, (maxYVal - minYVal) / 2, maxYVal]);
+
+  // circles.attr('transform', d => `translate(${d.x}, ${d.y})`);
+
+  const axisY = axisLeft(yScale).tickValues([ranges.y.min, (ranges.y.max - ranges.y.min) / 2, ranges.y.max]);
   const axisX = axisBottom(xScale);
 
   axis.leftYAxis.call(axisY);
   axis.bottomXAxis.call(axisX)
   //svg.call(axisY);
 
+  const lineCreate = lines.enter()
+    .append('path')
+    .attr('class', 'path')
+    .attr("stroke", "black")
+    .attr('fill', 'none')
+
+  lineCreate.merge(lines).attr("d", line<any>()
+    .x((d) => { return (d.x) })
+    .y((d) => { return (d.y) })
+  )
+
   const dot = circles
     .enter()
     .append("g")
     .attr('class', 'dot')
-    .attr('transform', d => `translate(${d.x}, ${d.y})`)
+  // .attr('transform', d => `translate(${d.x}, ${d.y})`);
+
+  dot.merge(circles).attr('transform', d => `translate(${d.x}, ${d.y})`);
+
+  // circles
+  ;
 
   dot.append('circle')
     .attr("r", d => d.r)
     .attr('fill', d => d.fill)
 
-  dot.append('text')
-    .text(``)
-    .attr('x', d => d.r)
-
-  const lineToAxis = dot.append('g')
-    .attr('class', 'line_to_axis')
-
-  lineToAxis.append('path')
-    .attr('class', 'line_to_axis-line')
-    .attr('d', d => `M 0 0 L ${-d.x} 0`)
-
-  lineToAxis.append('text')
-    .attr('x', d => -d.x)
-    .attr('class', 'line_to_axis-value')
-    .text((d, n) => data[n].y)
-
-  lineToAxis.append('path')
-    .attr('class', 'line_to_axis-line')
-    .attr('d', d => `M 0 0 L  0 ${chartSize.height - d.y}`)
-
-  lineToAxis.append('text')
-    .attr('y', d => `${chartSize.height - d.y}`)
-    .attr('class', 'line_to_axis-value')
-    .text((d, n) => data[n].x)
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
-import { createChart, drawData } from './charta';
-import { ChartLayout } from './types';
+import { createChart, drawData, resizeChart } from './charta';
+import { ChartLayout, createRange } from './types';
+import { createRangeDots, DotData } from './axis'
 
 
 const ChartComponent: React.FC<{}> = () => {
@@ -14,7 +15,9 @@ const ChartComponent: React.FC<{}> = () => {
     const height = svgRef.current?.clientHeight;
 
 
-    var data = [
+
+
+    var data: DotData = [
       { x: 164, y: 23, r: 30, fill: 'red' },
       { x: 82, y: 13, r: 10, fill: 'blue' },
       { x: 13, y: 123, r: 10, fill: 'yellow' },
@@ -23,15 +26,19 @@ const ChartComponent: React.FC<{}> = () => {
     if (svgRef.current && width && height) {
 
       if (!chartLayout.current) {
-        debugger;
         chartLayout.current = createChart(svgRef.current, { width, height }, margin);
       }
-      drawData(chartLayout.current, data, { width, height }, margin);
+      drawData<DotData>(chartLayout.current, data, createRangeDots, { width, height }, margin);
 
       window.addEventListener("resize", function () {
 
         const width = svgRef.current?.clientWidth;
         const height = svgRef.current?.clientHeight;
+
+        if (chartLayout.current && width && height) {
+          resizeChart(chartLayout.current, { width, height }, margin);
+          drawData(chartLayout.current, data, createRangeDots, { width, height }, margin);
+        }
 
         console.log("Resource conscious resize callback!");
       });

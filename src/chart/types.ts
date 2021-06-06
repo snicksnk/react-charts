@@ -1,3 +1,4 @@
+import { axisRight } from "d3-axis";
 import { Selection } from "d3-selection";
 
 export interface Size {
@@ -28,3 +29,15 @@ export interface ChartLayout {
   chartCanvas: ChartCanvas
   axis: Axis
 }
+
+export type Range = {
+  min: number,
+  max: number
+}
+
+export type AxisRange = {
+  x: Range,
+  y: Range
+}
+
+export type createRange<D> = (data: D) => AxisRange
