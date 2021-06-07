@@ -1,4 +1,5 @@
 import { axisRight } from "d3-axis";
+import { ScaleLinear } from "d3-scale";
 import { Selection } from "d3-selection";
 
 export interface Size {
@@ -17,6 +18,12 @@ export interface ChartMargins {
 export interface ChartSizeParams {
   size: Size
   margin: ChartMargins
+  tickSettings: TicksSettings
+}
+
+export enum LineCurveType {
+  STRAIGHT,
+  CURVED
 }
 
 export interface Axis {
@@ -45,6 +52,16 @@ export type Range = {
 export type AxisRange = {
   x: Range,
   y: Range
+}
+
+export type Scales = {
+  x: ScaleLinear<number, number, never>,
+  y: ScaleLinear<number, number, never>,
+}
+
+export type TicksSettings = {
+  x: number,
+  y: number
 }
 
 export type createRange<D> = (data: D) => AxisRange

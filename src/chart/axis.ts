@@ -2,7 +2,7 @@ import { max, min } from 'd3-array';
 import { createRange } from './types';
 
 export type DotData = Array<{
-  x: number, y: number, r: number, fill: string
+  x: number, y: number,
 }>
 
 export type LinesData = Array<DotData>;

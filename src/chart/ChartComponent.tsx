@@ -1,11 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components/macro';
 import { createChart, drawData, resizeChart } from './charta';
-import { ChartLayout } from './types';
+import { ChartLayout, ChartSizeParams, LineCurveType, TicksSettings } from './types';
 import { createRangeLine, LinesData } from './axis'
 
+export type LineChartComponentProps = {
+  className: string,
+  data: LinesData,
+  linesTypes: Array<LineCurveType>,
+  tickSettings: TicksSettings
+}
 
-const ChartComponent: React.FC<{ className: string }> = ({ className }) => {
+
+export const ChartComponent: React.FC<LineChartComponentProps> = ({ className, data, linesTypes, tickSettings }) => {
   const svgRef = useRef<HTMLDivElement | null>(null);
 
   const chartLayout = useRef<ChartLayout | null>(null);
@@ -15,21 +22,8 @@ const ChartComponent: React.FC<{ className: string }> = ({ className }) => {
     const width = svgRef.current?.clientWidth || 0;
     const height = svgRef.current?.clientHeight || 0;
 
-    const chartSizeParams = { size: { width, height }, margin };
+    const chartSizeParams: ChartSizeParams = { size: { width, height }, margin, tickSettings };
 
-
-
-    var data: LinesData = [[
-      { x: 34, y: 23, r: 30, fill: 'red' },
-      { x: 82, y: 13, r: 10, fill: 'blue' },
-      { x: 93, y: 123, r: 10, fill: 'yellow' },
-    ],
-    [
-      { x: 34, y: 33, r: 30, fill: 'red' },
-      { x: 42, y: 23, r: 10, fill: 'blue' },
-      { x: 63, y: 53, r: 10, fill: 'yellow' },
-    ]
-    ];
 
     if (svgRef.current && width && height) {
 
@@ -43,7 +37,7 @@ const ChartComponent: React.FC<{ className: string }> = ({ className }) => {
         const width = svgRef.current?.clientWidth || 0;
         const height = svgRef.current?.clientHeight || 0;
 
-        const chartSizeParams = { size: { width, height }, margin };
+        const chartSizeParams = { size: { width, height }, margin, tickSettings };
 
         if (chartLayout.current && width && height) {
           resizeChart(chartLayout.current, chartSizeParams);
@@ -61,6 +55,11 @@ const ChartComponent: React.FC<{ className: string }> = ({ className }) => {
 
   return (<div className={className} ref={svgRef} style={{ width: '80%', height: '400px' }}>
   </div>)
+}
+
+ChartComponent.defaultProps = {
+  className: '',
+  data: []
 }
 
 export default styled(ChartComponent)`
