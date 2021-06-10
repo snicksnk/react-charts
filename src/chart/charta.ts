@@ -2,7 +2,7 @@ import { scaleLinear, scaleQuantize } from "d3-scale";
 import { select } from "d3-selection";
 import { axisLeft, axisBottom } from "d3-axis";
 import { Axis, AxisRange, ChartCanvas, ChartLayout, ChartMargins, ChartSizeParams, createRange, Data, Range, Scales, Size, SVG, TicksSettings } from "./types";
-import { curveBasis, line } from "d3-shape";
+import { curveBasis, curveLinear, curveMonotoneX, line } from "d3-shape";
 
 
 
@@ -77,7 +77,8 @@ const createScales = (chartSizeParams: ChartSizeParams, ranges: AxisRange) => {
   return { x, y };
 }
 
-const axisSteps = (range: Range, step: number) => {
+const axisSteps = (range: Range, stepFromConfig?: number) => {
+  const step = stepFromConfig || (range.max - range.min) / 4;
   const ticks = (new Array(Math.ceil((range.max - range.min) / step))).fill(0).reduce((acc, _, k) => {
     acc.push(range.min + k * step);
     return acc;
@@ -91,12 +92,13 @@ const drawAxis = (chartLayout: ChartLayout, scales: Scales, chartSizeParams: Cha
   const { size, margin } = chartSizeParams
   const { axis } = chartLayout;
 
+
   const chartSize = calcChartSize(size, margin);
 
   const { width, height } = chartSize;
 
-  const ticksY = axisSteps(ranges.y, ticksSettings.y);
-  const ticksX = axisSteps(ranges.x, ticksSettings.x);
+  const ticksY = axisSteps(ranges.y, ticksSettings.step?.y);
+  const ticksX = axisSteps(ranges.x, ticksSettings.step?.x);
 
   const axisY = axisLeft(scales.y).tickValues(ticksY);//.ticks(3, 'f')//.tickValues([ranges.y.min, (ranges.y.max - ranges.y.min) / 2, ranges.y.max]);
   const axisX = axisBottom(scales.x).tickValues(ticksX);
@@ -138,7 +140,7 @@ export function drawData<D = Array<any>>(chartLayout: ChartLayout, data: D & Arr
 
   const ranges = createRange(data);
 
-  const { tickSettings } = chartSizeParams;
+  const { tickSettings, lineCurveType } = chartSizeParams;
 
   const scales = createScales(chartSizeParams, ranges);
 
@@ -193,9 +195,11 @@ export function drawData<D = Array<any>>(chartLayout: ChartLayout, data: D & Arr
     .attr("stroke", "black")
     .attr('fill', 'none');
 
+  
+
   lineCreate.merge(lines)
     .attr("d", line<any>()
-      .curve(curveBasis)
+      //.curve((_, n) => lineCurveType[n] === 'CURVED' ?  curveMonotoneX : curveLinear)
       .x((d) => { return (d.x) })
       .y((d) => { return (d.y) })
     )

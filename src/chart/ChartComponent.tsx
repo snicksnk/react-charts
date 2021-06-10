@@ -8,11 +8,12 @@ export type LineChartComponentProps = {
   className: string,
   data: LinesData,
   linesTypes: Array<LineCurveType>,
-  tickSettings: TicksSettings
+  tickSettings: TicksSettings,
+  lineCurveType: Array<LineCurveType>
 }
 
 
-export const ChartComponent: React.FC<LineChartComponentProps> = ({ className, data, linesTypes, tickSettings }) => {
+export const ChartComponent: React.FC<LineChartComponentProps> = ({ className, data, linesTypes, tickSettings, lineCurveType }) => {
   const svgRef = useRef<HTMLDivElement | null>(null);
 
   const chartLayout = useRef<ChartLayout | null>(null);
@@ -22,7 +23,7 @@ export const ChartComponent: React.FC<LineChartComponentProps> = ({ className, d
     const width = svgRef.current?.clientWidth || 0;
     const height = svgRef.current?.clientHeight || 0;
 
-    const chartSizeParams: ChartSizeParams = { size: { width, height }, margin, tickSettings };
+    const chartSizeParams: ChartSizeParams = { size: { width, height }, margin, tickSettings, lineCurveType };
 
 
     if (svgRef.current && width && height) {
@@ -33,11 +34,12 @@ export const ChartComponent: React.FC<LineChartComponentProps> = ({ className, d
       drawData<LinesData>(chartLayout.current, data, createRangeLine, chartSizeParams);
 
 
+
       const onResize = () => {
         const width = svgRef.current?.clientWidth || 0;
         const height = svgRef.current?.clientHeight || 0;
 
-        const chartSizeParams = { size: { width, height }, margin, tickSettings };
+        const chartSizeParams = { size: { width, height }, margin, tickSettings, lineCurveType };
 
         if (chartLayout.current && width && height) {
           resizeChart(chartLayout.current, chartSizeParams);
@@ -51,7 +53,7 @@ export const ChartComponent: React.FC<LineChartComponentProps> = ({ className, d
       }
     }
 
-  }, []);
+  }, [tickSettings, data, lineCurveType, linesTypes]);
 
   return (<div className={className} ref={svgRef} style={{ width: '80%', height: '400px' }}>
   </div>)

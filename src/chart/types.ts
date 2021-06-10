@@ -19,6 +19,7 @@ export interface ChartSizeParams {
   size: Size
   margin: ChartMargins
   tickSettings: TicksSettings
+  lineCurveType: Array<LineCurveType>
 }
 
 export enum LineCurveType {
@@ -60,8 +61,10 @@ export type Scales = {
 }
 
 export type TicksSettings = {
-  x: number,
-  y: number
+  step: {
+    x?: number,
+    y?: number
+  }
 }
 
 export type createRange<D> = (data: D) => AxisRange

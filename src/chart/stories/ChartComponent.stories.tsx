@@ -26,19 +26,21 @@ const Template: Story<LineChartComponentProps> = (args) => <ChartComponent {...a
 export const Chart = Template.bind({});
 Chart.args = {
   data: [[
-    { x: 34, y: 23 },
+    { x: 30, y: 20 },
     { x: 82, y: 13 },
-    { x: 93, y: 123 },
+    { x: 93, y: 120 },
   ],
   [
     { x: 34, y: 33 },
     { x: 42, y: 23 },
-    { x: 93, y: 53 },
+    { x: 90, y: 53 },
   ]
   ],
   tickSettings: {
-    x: 30,
-    y: 40
+    step: {
+      x: 50,
+      y: 20
+    }
   }
 };
 
