@@ -1,7 +1,7 @@
 import { scaleLinear, scaleQuantize } from "d3-scale";
 import { select } from "d3-selection";
 import { axisLeft, axisBottom } from "d3-axis";
-import { Axis, AxisRange, ChartCanvas, ChartLayout, ChartMargins, ChartSizeParams, createRange, Data, Range, Scales, Size, SVG, TicksSettings } from "./types";
+import { Axis, AxisParams, AxisRange, ChartCanvas, ChartLayout, ChartMargins, ChartSettings, ChartSizeParams, createRange, Data, Range, Scales, Size, SVG, TicksSettings } from "./types";
 import { curveBasis, curveLinear, curveMonotoneX, line } from "d3-shape";
 
 
@@ -135,12 +135,13 @@ const drawAxis = (chartLayout: ChartLayout, scales: Scales, chartSizeParams: Cha
 
 
 
-export function drawData<D = Array<any>>(chartLayout: ChartLayout, data: D & Array<any>, createRange: createRange<any>, chartSizeParams: ChartSizeParams) {
+export function drawData<D = Array<any>>(chartLayout: ChartLayout, data: D & Array<any>, createRange: createRange<any>, chartSizeParams: ChartSizeParams, axisParams: AxisParams, chartSettings: ChartSettings) {
   const { chartCanvas } = chartLayout;
 
   const ranges = createRange(data);
 
-  const { tickSettings, lineCurveType } = chartSizeParams;
+  const { tickSettings } = axisParams;
+  const { lineCurveType } = chartSettings;
 
   const scales = createScales(chartSizeParams, ranges);
 

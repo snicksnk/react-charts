@@ -36,11 +36,16 @@ Chart.args = {
     { x: 90, y: 53 },
   ]
   ],
-  tickSettings: {
-    step: {
-      x: 50,
-      y: 20
-    }
+  axisParams: {
+    tickSettings: {
+      step: {
+        x: 50,
+        y: 20
+      }
+    },
+  },
+  chartSettings: {
+    lineCurveType: []
   }
 };
 

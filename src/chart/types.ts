@@ -18,7 +18,14 @@ export interface ChartMargins {
 export interface ChartSizeParams {
   size: Size
   margin: ChartMargins
+}
+
+export interface AxisParams {
   tickSettings: TicksSettings
+}
+
+// TODO add generic here
+export interface ChartSettings {
   lineCurveType: Array<LineCurveType>
 }
 

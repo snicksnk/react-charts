@@ -1,15 +1,14 @@
 import React, { MutableRefObject, useEffect, useRef } from 'react';
 import styled from 'styled-components/macro';
 import { createChart, drawData, resizeChart } from './charta';
-import { ChartLayout, ChartSizeParams, LineCurveType, TicksSettings } from './types';
+import { AxisParams, ChartLayout, ChartSettings, ChartSizeParams, LineCurveType, TicksSettings } from './types';
 import { createRangeLine, LinesData } from './axis'
 
 export type LineChartComponentProps = {
   className: string,
   data: LinesData,
-  linesTypes: Array<LineCurveType>,
-  tickSettings: TicksSettings,
-  lineCurveType: Array<LineCurveType>
+  axisParams: AxisParams,
+  chartSettings: ChartSettings
 }
 
 
@@ -55,7 +54,7 @@ export type LineChartComponentProps = {
 // }
 
 
-export const ChartComponent: React.FC<LineChartComponentProps> = ({ className, data, linesTypes, tickSettings, lineCurveType }) => {
+export const ChartComponent: React.FC<LineChartComponentProps> = ({ className, data, axisParams, chartSettings }) => {
   const svgRef = useRef<HTMLDivElement | null>(null);
 
   const chartLayout = useRef<ChartLayout | null>(null);
@@ -67,7 +66,7 @@ export const ChartComponent: React.FC<LineChartComponentProps> = ({ className, d
 
 
     const createChartSizeParams = (width: number, height: number) => {
-      const chartSizeParams: ChartSizeParams = { size: { width, height }, margin, tickSettings, lineCurveType };
+      const chartSizeParams: ChartSizeParams = { size: { width, height }, margin };
       return chartSizeParams;
     }
 
@@ -75,7 +74,7 @@ export const ChartComponent: React.FC<LineChartComponentProps> = ({ className, d
       if (!chartLayout.current) {
         chartLayout.current = createChart(svgRef.current, createChartSizeParams(width, height));
       }
-      drawData<LinesData>(chartLayout.current, data, createRangeLine, createChartSizeParams(width, height));
+      drawData<LinesData>(chartLayout.current, data, createRangeLine, createChartSizeParams(width, height), axisParams, chartSettings);
 
       const onResize = () => {
         const width = svgRef.current?.clientWidth || 0;
@@ -84,7 +83,7 @@ export const ChartComponent: React.FC<LineChartComponentProps> = ({ className, d
 
         if (chartLayout.current && width && height) {
           resizeChart(chartLayout.current, createChartSizeParams(width, height));
-          drawData(chartLayout.current, data, createRangeLine, createChartSizeParams(width, height));
+          drawData(chartLayout.current, data, createRangeLine, createChartSizeParams(width, height), axisParams, chartSettings);
         }
       };
 
@@ -94,7 +93,7 @@ export const ChartComponent: React.FC<LineChartComponentProps> = ({ className, d
       }
     }
 
-  }, [tickSettings, data, lineCurveType, linesTypes]);
+  }, [axisParams, data, chartSettings]);
 
   return (<div className={className} ref={svgRef} style={{ width: '80%', height: '400px' }}>
   </div>)
