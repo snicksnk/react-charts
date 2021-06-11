@@ -145,18 +145,10 @@ export function drawData<D = Array<any>>(chartLayout: ChartLayout, data: D & Arr
   const scales = createScales(chartSizeParams, ranges);
 
   drawAxis(chartLayout, scales, chartSizeParams, ranges, tickSettings);
-  const coords = data.map(line => line.map((record) => {
-    return {
-      x: scales.x(record.x),
-      y: scales.y(record.y),
-      r: record.r,
-      fill: record.fill
-    };
-  }));
 
   // const circles = chartCanvas.selectAll<SVGGElement, D>(".dot").data(coords)
 
-  const lines = chartCanvas.selectAll<SVGPathElement, Array<D>>(".path").data(coords);
+  const lines = chartCanvas.selectAll<SVGPathElement, Array<D>>(".path").data(data);
 
 
   // circles.attr('transform', d => `translate(${d.x}, ${d.y})`);
@@ -200,8 +192,8 @@ export function drawData<D = Array<any>>(chartLayout: ChartLayout, data: D & Arr
   lineCreate.merge(lines)
     .attr("d", line<any>()
       //.curve((_, n) => lineCurveType[n] === 'CURVED' ?  curveMonotoneX : curveLinear)
-      .x((d) => { return (d.x) })
-      .y((d) => { return (d.y) })
+      .x((d) => { return scales.x(d.x) })
+      .y((d) => { return scales.y(d.y) })
     )
     .attr('stroke', (_, k) => {
       return getLineColor(k)
