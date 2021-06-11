@@ -66,7 +66,7 @@ const calcChartSize = (size: Size, margin: ChartMargins) => {
 };
 
 
-const createScales = (chartSizeParams: ChartSizeParams, ranges: AxisRange) => {
+export const createScales = (chartSizeParams: ChartSizeParams, ranges: AxisRange) => {
   const { size, margin } = chartSizeParams
   const { width, height } = calcChartSize(size, margin);
 
@@ -88,7 +88,8 @@ const axisSteps = (range: Range, stepFromConfig?: number) => {
   return ticks;
 }
 
-const drawAxis = (chartLayout: ChartLayout, scales: Scales, chartSizeParams: ChartSizeParams, ranges: AxisRange, ticksSettings: TicksSettings) => {
+export const drawAxis = (chartLayout: ChartLayout, scales: Scales, chartSizeParams: ChartSizeParams, ranges: AxisRange, axisParams: AxisParams) => {
+  const { tickSettings } = axisParams;
   const { size, margin } = chartSizeParams
   const { axis } = chartLayout;
 
@@ -97,8 +98,8 @@ const drawAxis = (chartLayout: ChartLayout, scales: Scales, chartSizeParams: Cha
 
   const { width, height } = chartSize;
 
-  const ticksY = axisSteps(ranges.y, ticksSettings.step?.y);
-  const ticksX = axisSteps(ranges.x, ticksSettings.step?.x);
+  const ticksY = axisSteps(ranges.y, tickSettings.step?.y);
+  const ticksX = axisSteps(ranges.x, tickSettings.step?.x);
 
   const axisY = axisLeft(scales.y).tickValues(ticksY);//.ticks(3, 'f')//.tickValues([ranges.y.min, (ranges.y.max - ranges.y.min) / 2, ranges.y.max]);
   const axisX = axisBottom(scales.x).tickValues(ticksX);
@@ -135,17 +136,19 @@ const drawAxis = (chartLayout: ChartLayout, scales: Scales, chartSizeParams: Cha
 
 
 
-export function drawData<D = Array<any>>(chartLayout: ChartLayout, data: D & Array<any>, createRange: createRange<any>, chartSizeParams: ChartSizeParams, axisParams: AxisParams, chartSettings: ChartSettings) {
+export function drawData<D = Array<any>>(chartLayout: ChartLayout, data: D & Array<any>, scales: Scales, chartSettings: ChartSettings) {
   const { chartCanvas } = chartLayout;
 
-  const ranges = createRange(data);
 
-  const { tickSettings } = axisParams;
+
+
   const { lineCurveType } = chartSettings;
 
-  const scales = createScales(chartSizeParams, ranges);
 
-  drawAxis(chartLayout, scales, chartSizeParams, ranges, tickSettings);
+  // const { tickSettings } = axisParams;
+  // const ranges = createRange(data);
+  // const scales = createScales(chartSizeParams, ranges);
+  // drawAxis(chartLayout, scales, chartSizeParams, ranges, tickSettings);
 
   // const circles = chartCanvas.selectAll<SVGGElement, D>(".dot").data(coords)
 
