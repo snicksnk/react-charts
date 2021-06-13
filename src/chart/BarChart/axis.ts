@@ -1,11 +1,6 @@
-import { max, min } from 'd3-array';
 import { axisBottom, axisLeft } from 'd3-axis';
-import { scaleLinear, scaleBand, ScaleLinear } from 'd3-scale';
-import { Selection } from 'd3-selection';
-import { domain } from 'process';
-import { BarsData } from '../BarChart/types';
 import { axisSteps, calcChartSize } from '../charta';
-import { Axis, AxisParams, AxisRange, ChartLayout, ChartSizeParams, createRange, Scales } from '../types';
+import { AxisParams, AxisRange, ChartLayout, ChartSizeParams, Scales } from '../types';
 
 export const drawAxis = (chartLayout: ChartLayout, scales: Scales, chartSizeParams: ChartSizeParams, ranges: AxisRange, axisParams: AxisParams) => {
   const { tickSettings } = axisParams;

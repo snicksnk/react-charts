@@ -1,4 +1,3 @@
-import { axisRight } from "d3-axis";
 import { ScaleLinear } from "d3-scale";
 import { Selection } from "d3-selection";
 

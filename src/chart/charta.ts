@@ -1,8 +1,8 @@
 import { scaleLinear, scaleQuantize } from "d3-scale";
 import { select } from "d3-selection";
 import { axisLeft, axisBottom } from "d3-axis";
-import { Axis, AxisParams, AxisRange, ChartCanvas, ChartLayout, ChartMargins, ChartSettings, ChartSizeParams, createRange, Data, Range, Scales, Size, SVG, TicksSettings } from "./types";
-import { curveBasis, curveLinear, curveMonotoneX, line } from "d3-shape";
+import { AxisParams, AxisRange, ChartLayout, ChartMargins, ChartSettings, ChartSizeParams, Range, Scales, Size } from "./types";
+import { line } from "d3-shape";
 
 
 
@@ -143,7 +143,7 @@ export function drawData<D = Array<any>>(chartLayout: ChartLayout, data: D & Arr
 
 
 
-  const { lineCurveType } = chartSettings;
+  // const { lineCurveType } = chartSettings;
 
 
   // const { tickSettings } = axisParams;
@@ -161,7 +161,7 @@ export function drawData<D = Array<any>>(chartLayout: ChartLayout, data: D & Arr
 
 
 
-  const getLineColor = scaleQuantize<string, unknown>()
+  const getLineColor = scaleQuantize<string, string>()
     .domain([0, data.length])
     .range([
       '#9077F5',

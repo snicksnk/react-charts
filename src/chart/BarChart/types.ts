@@ -7,8 +7,8 @@ export type BarValue = {
 
 
 export type BarScales = {
-  x: numberScale,
-  y: WordScale
+  x: WordScale,
+  y: numberScale,
 }
 
 export type BarsData = Array<BarValue>;

@@ -30,7 +30,7 @@ export const drawNumberAxis = (layoutAxis: LayoutAxis, layoutGrid: LayoutGrid, s
 }
 
 export const drawWordsAxis = (layoutAxis: LayoutAxis, layoutGrid: LayoutGrid, scale: WordScale, chartSizeParams: ChartSizeParams, range: RangeWords, axisParams: AxisParams, axisName: AxisNames) => {
-  const { tickSettings } = axisParams;
+  // const { tickSettings } = axisParams;
   const { size, margin } = chartSizeParams
 
   const { height } = calcChartSize(size, margin);
