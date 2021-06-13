@@ -75,3 +75,5 @@ export type TicksSettings = {
 }
 
 export type createRange<D> = (data: D) => AxisRange
+
+export type DrawChart<DATA_TYPE extends Array<Object>> = (chartLayout: ChartLayout, data: DATA_TYPE, chartSizeParams: ChartSizeParams, chartSettings: ChartSettings, axisParams: AxisParams) => void

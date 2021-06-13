@@ -56,7 +56,7 @@ export function resizeChart(chartLayout: ChartLayout, chartSizeParams: ChartSize
   chartCanvas.attr("transform", `translate(${margin.left}, ${margin.top})`);
 }
 
-const calcChartSize = (size: Size, margin: ChartMargins) => {
+export const calcChartSize = (size: Size, margin: ChartMargins) => {
   const { top, right, bottom, left } = margin;
   const { width, height } = size;
   return {
@@ -77,9 +77,9 @@ export const createScales = (chartSizeParams: ChartSizeParams, ranges: AxisRange
   return { x, y };
 }
 
-const axisSteps = (range: Range, stepFromConfig?: number) => {
+export const axisSteps = (range: Range, stepFromConfig?: number) => {
   const step = stepFromConfig || (range.max - range.min) / 4;
-  const ticks = (new Array(Math.ceil((range.max - range.min) / step))).fill(0).reduce((acc, _, k) => {
+  const ticks = (new Array(Math.ceil((range.max - range.min) / step))).fill(0).reduce((acc: Array<number>, _, k) => {
     acc.push(range.min + k * step);
     return acc;
   }, [])
@@ -97,6 +97,7 @@ export const drawAxis = (chartLayout: ChartLayout, scales: Scales, chartSizePara
   const chartSize = calcChartSize(size, margin);
 
   const { width, height } = chartSize;
+
 
   const ticksY = axisSteps(ranges.y, tickSettings.step?.y);
   const ticksX = axisSteps(ranges.x, tickSettings.step?.x);
