@@ -1,7 +1,7 @@
 import { scaleLinear, scaleQuantize } from "d3-scale";
 import { select } from "d3-selection";
 import { axisLeft, axisBottom } from "d3-axis";
-import { AxisParams, AxisRange, ChartLayout, ChartMargins, ChartSettings, ChartSizeParams, Range, Scales, Size } from "./types";
+import { LineAxisParams, AxisRange, ChartLayout, ChartMargins, LineChartSettings, ChartSizeParams, Range, Scales, Size } from "../types";
 import { line } from "d3-shape";
 
 
@@ -88,7 +88,7 @@ export const axisSteps = (range: Range, stepFromConfig?: number) => {
   return ticks;
 }
 
-export const drawAxis = (chartLayout: ChartLayout, scales: Scales, chartSizeParams: ChartSizeParams, ranges: AxisRange, axisParams: AxisParams) => {
+export const drawAxis = (chartLayout: ChartLayout, scales: Scales, chartSizeParams: ChartSizeParams, ranges: AxisRange, axisParams: LineAxisParams) => {
   const { tickSettings } = axisParams;
   const { size, margin } = chartSizeParams
   const { axis } = chartLayout;
@@ -137,7 +137,7 @@ export const drawAxis = (chartLayout: ChartLayout, scales: Scales, chartSizePara
 
 
 
-export function drawData<D = Array<any>>(chartLayout: ChartLayout, data: D & Array<any>, scales: Scales, chartSettings: ChartSettings) {
+export function drawData<D = Array<any>>(chartLayout: ChartLayout, data: D & Array<any>, scales: Scales, chartSettings: LineChartSettings) {
   const { chartCanvas } = chartLayout;
 
 

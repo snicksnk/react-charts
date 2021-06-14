@@ -2,16 +2,15 @@ import React from 'react';
 import { Story, Meta } from '@storybook/react';
 
 import ChartComponent, { ChartComponentProps } from '../ChartComponent';
-import { drawLineChart } from '../Linechart/draw';
-import { BarsData } from '../BarChart/types';
+import { BarAxisParams, BarChartSettings, BarsData, Orintation } from '../BarChart/types';
 import { drawBarChart } from '../BarChart/draw';
 
 export default {
   title: 'Example/BarChart',
   component: ChartComponent,
-  // argTypes: {
-  //   className: { control: 'string' },
-  // }
+  argTypes: {
+    className: { control: 'string' },
+  },
 } as Meta;
 
 
@@ -24,7 +23,7 @@ export default {
 // } as Meta;
 
 
-const Template: Story<ChartComponentProps<BarsData>> = (args) => <ChartComponent {...args} />;
+const Template: Story<ChartComponentProps<BarsData, BarChartSettings, BarAxisParams>> = (args) => <ChartComponent {...args} />;
 
 export const ChartWithDefaultTicks = Template.bind({});
 ChartWithDefaultTicks.args = {
@@ -38,9 +37,12 @@ ChartWithDefaultTicks.args = {
       step: {
       }
     },
+    showGrid: {
+      y: false
+    }
   },
   chartSettings: {
-    lineCurveType: []
+    orientation: Orintation.VERTICAL
   },
   drawChart: drawBarChart
 };

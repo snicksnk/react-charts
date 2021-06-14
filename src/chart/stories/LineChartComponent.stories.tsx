@@ -3,8 +3,8 @@ import { Story, Meta } from '@storybook/react';
 
 import ChartComponent, { ChartComponentProps } from '../ChartComponent';
 import { drawLineChart } from '../Linechart/draw';
-import { BarsData } from '../BarChart/types';
 import { LinesData } from '../axis';
+import { LineAxisParams, LineChartSettings } from '../types';
 
 export default {
   title: 'Example/LineChart',
@@ -24,7 +24,7 @@ export default {
 // } as Meta;
 
 
-const Template: Story<ChartComponentProps<LinesData>> = (args) => <ChartComponent {...args} />;
+const Template: Story<ChartComponentProps<LinesData, LineChartSettings, LineAxisParams>> = (args) => <ChartComponent {...args} />;
 
 export const ChartWithDefaultTicks = Template.bind({});
 ChartWithDefaultTicks.args = {
@@ -44,6 +44,10 @@ ChartWithDefaultTicks.args = {
       step: {
       }
     },
+    showGrid: {
+      x: true,
+      y: true
+    }
   },
   chartSettings: {
     lineCurveType: []
@@ -72,6 +76,10 @@ ChartWithCustomStepTicks.args = {
         y: 20
       }
     },
+    showGrid: {
+      x: true,
+      y: true
+    }
   },
   chartSettings: {
     lineCurveType: []

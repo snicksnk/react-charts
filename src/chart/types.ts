@@ -19,12 +19,16 @@ export interface ChartSizeParams {
   margin: ChartMargins
 }
 
-export interface AxisParams {
+export interface LineAxisParams {
   tickSettings: TicksSettings
+  showGrid: {
+    x: boolean,
+    y: boolean
+  }
 }
 
 // TODO add generic here
-export interface ChartSettings {
+export interface LineChartSettings {
   lineCurveType: Array<LineCurveType>
 }
 
@@ -75,4 +79,4 @@ export type TicksSettings = {
 
 export type createRange<D> = (data: D) => AxisRange
 
-export type DrawChart<DATA_TYPE extends Array<Object>> = (chartLayout: ChartLayout, data: DATA_TYPE, chartSizeParams: ChartSizeParams, chartSettings: ChartSettings, axisParams: AxisParams) => void
+export type DrawChart<DATA_TYPE, CHART_SETTINGS, AXIS_PARAMS> = (chartLayout: ChartLayout, data: DATA_TYPE, chartSizeParams: ChartSizeParams, chartSettings: CHART_SETTINGS, axisParams: AXIS_PARAMS) => void

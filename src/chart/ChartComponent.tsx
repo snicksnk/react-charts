@@ -1,18 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components/macro';
-import { createChart, resizeChart } from './charta';
-import { AxisParams, ChartLayout, ChartSettings, ChartSizeParams, DrawChart } from './types';
+import { createChart, resizeChart } from './Linechart/charta';
+import { ChartLayout, ChartSizeParams, DrawChart } from './types';
 
-export type ChartComponentProps<DATA_TYPE = Object[]> = {
+export type ChartComponentProps<DATA_TYPE, CHART_SETTINGS, AXIS_PARAMS > = {
   className: string,
   data: DATA_TYPE,
-  axisParams: AxisParams,
-  chartSettings: ChartSettings,
-  drawChart: DrawChart<Array<any>>,
+  axisParams: AXIS_PARAMS,
+  chartSettings: CHART_SETTINGS,
+  drawChart: DrawChart<DATA_TYPE, CHART_SETTINGS, AXIS_PARAMS>,
 }
 
 
-export const ChartComponent: React.FC<ChartComponentProps> = ({ className, data, axisParams, chartSettings, drawChart }) => {
+export const ChartComponent: React.FC<ChartComponentProps<any, any, any>> = ({ className, data, axisParams, chartSettings, drawChart }) => {
   const svgRef = useRef<HTMLDivElement | null>(null);
 
   const chartLayout = useRef<ChartLayout | null>(null);

@@ -1,8 +1,8 @@
 import { createRangeLine, LinesData } from "../axis";
-import { createScales, drawAxis, drawData } from "../charta";
-import { DrawChart } from "../types";
+import { createScales, drawAxis, drawData } from "./charta";
+import { DrawChart, LineAxisParams, LineChartSettings } from "../types";
 
-export const drawLineChart: DrawChart<LinesData> = (chartLayout, data, chartSizeParams, chartSettings, axisParams) =>{
+export const drawLineChart: DrawChart<LinesData, LineChartSettings, LineAxisParams> = (chartLayout, data, chartSizeParams, chartSettings, axisParams) =>{
 	const ranges = createRangeLine(data);
 	const scales = createScales(chartSizeParams, ranges);
 	drawAxis(chartLayout, scales, chartSizeParams, ranges, axisParams)

@@ -13,7 +13,7 @@ export interface RangeNumber {
 
 export type RangeWords = string[];
 
-export type numberScale = ScaleLinear<number, number, never>;
+export type NumberScale = ScaleLinear<number, number, number>;
 export type WordScale = ScaleBand<string>;
 
 
