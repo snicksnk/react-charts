@@ -1,11 +1,10 @@
-import { ChartSizeParams, DrawChart } from "../types";
 import { BarAxisParams, BarChartSettings, BarsData, Orintation } from "./types";
 import { drawData } from "./drawData";
 import { max } from "d3-array";
 import { calcChartSize } from "../Linechart/charta";
 import { scaleBand, scaleLinear } from "d3-scale";
 import { drawNumberAxis, drawWordsAxis } from "../common/axis";
-import { AxisNames } from "../common/types";
+import { AxisNames, ChartSizeParams, DrawChart } from "../common/types";
 
 
 export const createBarRange = (data: BarsData) => {

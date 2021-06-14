@@ -1,5 +1,5 @@
 import { NumberScale, WordScale } from "../common/types";
-import { TicksSettings } from "../types";
+import { TicksSettings } from "../Linechart/types";
 
 export type BarValue = {
   value: number,

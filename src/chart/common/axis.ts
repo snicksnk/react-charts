@@ -1,8 +1,7 @@
 import { axisBottom, axisLeft } from "d3-axis";
 import { BarAxisParams } from "../BarChart/types";
 import { axisSteps, calcChartSize } from "../Linechart/charta";
-import { Axis, ChartSizeParams } from "../types";
-import { AxisNames, NumberScale, RangeNumber, RangeWords, WordScale } from "./types";
+import { Axis, AxisNames, ChartSizeParams, NumberScale, RangeNumber, RangeWords, WordScale } from "./types";
 
 // TODO add vertical orientation
 export const drawNumberAxis = (axis: Axis, scale: NumberScale, chartSizeParams: ChartSizeParams, range: RangeNumber, axisParams: BarAxisParams, axisName: AxisNames) => {

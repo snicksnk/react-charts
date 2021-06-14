@@ -1,7 +1,6 @@
 import { scaleQuantize } from "d3-scale";
-import { AxisNames, NumberScale, WordScale } from "../common/types";
+import { AxisNames, ChartLayout, ChartSizeParams, NumberScale, WordScale } from "../common/types";
 import { calcChartSize } from "../Linechart/charta";
-import { ChartLayout, ChartSizeParams } from "../types";
 import { BarChartSettings, BarScales, BarsData, BarValue } from "./types";
 
 export function drawData(chartLayout: ChartLayout, data: BarsData, scales: BarScales, chartSettings: BarChartSettings, chartSizeParams: ChartSizeParams, valueAxis: AxisNames) {

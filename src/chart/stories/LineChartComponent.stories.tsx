@@ -4,7 +4,7 @@ import { Story, Meta } from '@storybook/react';
 import ChartComponent, { ChartComponentProps } from '../ChartComponent';
 import { drawLineChart } from '../Linechart/draw';
 import { LinesData } from '../axis';
-import { LineAxisParams, LineChartSettings } from '../types';
+import { LineAxisParams, LineChartSettings } from '../Linechart/types';
 
 export default {
   title: 'Example/LineChart',

@@ -1,8 +1,9 @@
 import { axisBottom, axisLeft } from 'd3-axis';
+import { ChartLayout, ChartSizeParams } from '../common/types';
 import { axisSteps, calcChartSize } from '../Linechart/charta';
-import { LineAxisParams, AxisRange, ChartLayout, ChartSizeParams, Scales } from '../types';
+import { LineAxisParams, AxisRange, LineChartScales } from '../Linechart/types';
 
-export const drawAxis = (chartLayout: ChartLayout, scales: Scales, chartSizeParams: ChartSizeParams, ranges: AxisRange, axisParams: LineAxisParams) => {
+export const drawAxis = (chartLayout: ChartLayout, scales: LineChartScales, chartSizeParams: ChartSizeParams, ranges: AxisRange, axisParams: LineAxisParams) => {
   const { tickSettings } = axisParams;
   const { size, margin } = chartSizeParams
   const { axis } = chartLayout;

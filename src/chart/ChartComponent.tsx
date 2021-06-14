@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components/macro';
+import { ChartLayout, ChartSizeParams, DrawChart } from './common/types';
 import { createChart, resizeChart } from './Linechart/charta';
-import { ChartLayout, ChartSizeParams, DrawChart } from './types';
 
 export type ChartComponentProps<DATA_TYPE, CHART_SETTINGS, AXIS_PARAMS > = {
   className: string,
