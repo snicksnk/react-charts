@@ -4,7 +4,7 @@ import { Story, Meta } from '@storybook/react';
 import ChartComponent, { ChartComponentProps } from '../ChartComponent';
 import { drawLineChart } from '../Linechart/draw';
 import { LinesData } from '../axis';
-import { LineAxisParams, LineChartSettings, LineCurveType } from '../Linechart/types';
+import { LineAxisParams, LineChartSettings, LineCurveType, LineDotted } from '../Linechart/types';
 
 export default {
   title: 'Example/LineChart',
@@ -25,36 +25,6 @@ export default {
 
 
 const Template: Story<ChartComponentProps<LinesData, LineChartSettings, LineAxisParams>> = (args) => <ChartComponent {...args} />;
-
-export const ChartWithDefaultTicks = Template.bind({});
-ChartWithDefaultTicks.args = {
-  data: [[
-    { x: 30, y: 20 },
-    { x: 82, y: 13 },
-    { x: 93, y: 120 },
-  ],
-  [
-    { x: 34, y: 33 },
-    { x: 42, y: 23 },
-    { x: 90, y: 53 },
-  ]
-  ],
-  axisParams: {
-    tickSettings: {
-      step: {
-      }
-    },
-    showGrid: {
-      x: true,
-      y: true
-    }
-  },
-  chartSettings: {
-    lineCurveType: []
-  },
-  drawChart: drawLineChart
-};
-
 
 export const ChartWithCustomStepTicksAndCurve = Template.bind({});
 ChartWithCustomStepTicksAndCurve.args = {
@@ -85,10 +55,44 @@ ChartWithCustomStepTicksAndCurve.args = {
     lineCurveType: [
       LineCurveType.STRAIGHT,
       LineCurveType.CURVED
-    ]
+    ],
+    lineDotted: [LineDotted.SOLID, LineDotted.DOTTED]
   },
   drawChart: drawLineChart
 };
+
+export const ChartWithDefaultTicks = Template.bind({});
+ChartWithDefaultTicks.args = {
+  data: [[
+    { x: 30, y: 20 },
+    { x: 82, y: 13 },
+    { x: 93, y: 120 },
+  ],
+  [
+    { x: 34, y: 33 },
+    { x: 42, y: 23 },
+    { x: 90, y: 53 },
+  ]
+  ],
+  axisParams: {
+    tickSettings: {
+      step: {
+      }
+    },
+    showGrid: {
+      x: true,
+      y: true
+    }
+  },
+  chartSettings: {
+    lineCurveType: [],
+    lineDotted: [LineDotted.DOTTED, LineDotted.SOLID]
+  },
+  drawChart: drawLineChart
+};
+
+
+
 
 // export const LoggedOut = Template.bind({});
 // LoggedOut.args = {

@@ -1,7 +1,7 @@
 import { scaleLinear, scaleQuantize } from "d3-scale";
 import { select } from "d3-selection";
 import { axisLeft, axisBottom } from "d3-axis";
-import { LineAxisParams, AxisRange, LineChartSettings, Range, LineChartScales, LineCurveType } from "./types";
+import { LineAxisParams, AxisRange, LineChartSettings, Range, LineChartScales, LineCurveType, LineDotted } from "./types";
 import { curveLinear, curveMonotoneX, line } from "d3-shape";
 import { ChartLayout, ChartMargins, ChartSizeParams, Size } from "../common/types";
 import { LinesData } from "../axis";
@@ -145,7 +145,7 @@ export function drawData(chartLayout: ChartLayout, data: LinesData, scales: Line
 
 
 
-  const { lineCurveType } = chartSettings;
+  const { lineCurveType, lineDotted } = chartSettings;
 
 
   // const { tickSettings } = axisParams;
@@ -155,7 +155,7 @@ export function drawData(chartLayout: ChartLayout, data: LinesData, scales: Line
 
   // const circles = chartCanvas.selectAll<SVGGElement, D>(".dot").data(coords)
 
-  const lines = chartCanvas.selectAll<SVGPathElement, Array<D>>(".path").data(data);
+  const lines = chartCanvas.selectAll<SVGPathElement, LinesData>(".path").data(data);
 
 
   // circles.attr('transform', d => `translate(${d.x}, ${d.y})`);
@@ -205,6 +205,7 @@ export function drawData(chartLayout: ChartLayout, data: LinesData, scales: Line
     .attr('stroke', (_, k) => {
       return getLineColor(k)
     })
+    .attr('stroke-dasharray', (d, n) => lineDotted[(n as any)] === LineDotted.DOTTED ? '4' : '0')
 
   lines.exit().remove();
 

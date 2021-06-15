@@ -11,6 +11,12 @@ export interface LineAxisParams {
 // TODO add generic here
 export interface LineChartSettings {
   lineCurveType: Array<LineCurveType>
+  lineDotted: Array<LineDotted>
+}
+
+export enum LineDotted {
+  SOLID,
+  DOTTED
 }
 
 export enum LineCurveType {

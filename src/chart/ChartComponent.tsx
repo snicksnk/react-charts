@@ -18,7 +18,7 @@ export const ChartComponent: React.FC<ChartComponentProps<any, any, any>> = ({ c
   const chartLayout = useRef<ChartLayout | null>(null);
 
   useEffect(() => {
-    const margin = { top: 50, right: 50, bottom: 50, left: 50, axisOffset: 0 };
+    const margin = { top: 50, right: 60, bottom: 50, left: 60, axisOffset: 0 };
     const width = svgRef.current?.clientWidth || 0;
     const height = svgRef.current?.clientHeight || 0;
 
