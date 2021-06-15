@@ -4,7 +4,7 @@ import { Story, Meta } from '@storybook/react';
 import ChartComponent, { ChartComponentProps } from '../ChartComponent';
 import { drawLineChart } from '../Linechart/draw';
 import { LinesData } from '../axis';
-import { LineAxisParams, LineChartSettings } from '../Linechart/types';
+import { LineAxisParams, LineChartSettings, LineCurveType } from '../Linechart/types';
 
 export default {
   title: 'Example/LineChart',
@@ -56,24 +56,24 @@ ChartWithDefaultTicks.args = {
 };
 
 
-export const ChartWithCustomStepTicks = Template.bind({});
-ChartWithCustomStepTicks.args = {
+export const ChartWithCustomStepTicksAndCurve = Template.bind({});
+ChartWithCustomStepTicksAndCurve.args = {
   data: [[
     { x: 30, y: 20 },
     { x: 82, y: 13 },
-    { x: 93, y: 120 },
+    { x: 90, y: 120 },
   ],
   [
-    { x: 34, y: 33 },
-    { x: 42, y: 23 },
-    { x: 90, y: 53 },
+    { x: 30, y: 33 },
+    { x: 42, y: 53 },
+    { x: 65, y: 73 },
+    { x: 90, y: 23 },
   ]
   ],
   axisParams: {
     tickSettings: {
       step: {
-        x: 50,
-        y: 20
+        x: 5,
       }
     },
     showGrid: {
@@ -82,7 +82,10 @@ ChartWithCustomStepTicks.args = {
     }
   },
   chartSettings: {
-    lineCurveType: []
+    lineCurveType: [
+      LineCurveType.STRAIGHT,
+      LineCurveType.CURVED
+    ]
   },
   drawChart: drawLineChart
 };

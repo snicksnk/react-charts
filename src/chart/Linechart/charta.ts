@@ -1,9 +1,10 @@
 import { scaleLinear, scaleQuantize } from "d3-scale";
 import { select } from "d3-selection";
 import { axisLeft, axisBottom } from "d3-axis";
-import { LineAxisParams, AxisRange, LineChartSettings, Range, LineChartScales } from "./types";
-import { line } from "d3-shape";
+import { LineAxisParams, AxisRange, LineChartSettings, Range, LineChartScales, LineCurveType } from "./types";
+import { curveLinear, curveMonotoneX, line } from "d3-shape";
 import { ChartLayout, ChartMargins, ChartSizeParams, Size } from "../common/types";
+import { LinesData } from "../axis";
 
 
 
@@ -138,13 +139,13 @@ export const drawAxis = (chartLayout: ChartLayout, scales: LineChartScales, char
 
 
 
-export function drawData<D = Array<any>>(chartLayout: ChartLayout, data: D & Array<any>, scales: LineChartScales, chartSettings: LineChartSettings) {
+export function drawData(chartLayout: ChartLayout, data: LinesData, scales: LineChartScales, chartSettings: LineChartSettings) {
   const { chartCanvas } = chartLayout;
 
 
 
 
-  // const { lineCurveType } = chartSettings;
+  const { lineCurveType } = chartSettings;
 
 
   // const { tickSettings } = axisParams;
@@ -196,10 +197,10 @@ export function drawData<D = Array<any>>(chartLayout: ChartLayout, data: D & Arr
   
 
   lineCreate.merge(lines)
-    .attr("d", line<any>()
-      //.curve((_, n) => lineCurveType[n] === 'CURVED' ?  curveMonotoneX : curveLinear)
+    .attr("d", (d, n) => line<any>()
+      .curve(lineCurveType[(n as any)] === LineCurveType.CURVED ?  curveMonotoneX : curveLinear)
       .x((d) => { return scales.x(d.x) })
-      .y((d) => { return scales.y(d.y) })
+      .y((d) => { return scales.y(d.y) })(d)
     )
     .attr('stroke', (_, k) => {
       return getLineColor(k)

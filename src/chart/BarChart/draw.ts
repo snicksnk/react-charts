@@ -1,4 +1,4 @@
-import { BarAxisParams, BarChartSettings, BarsData, Orintation } from "./types";
+import { BarAxisParams, BarChartSettings, BarsData, BarWidth, Orintation } from "./types";
 import { drawData } from "./drawData";
 import { max } from "d3-array";
 import { calcChartSize } from "../Linechart/charta";
@@ -17,14 +17,23 @@ export const createBarRange = (data: BarsData) => {
 }
 
 
-const getScales = (chartSizeParams: ChartSizeParams, range: ReturnType<typeof createBarRange>, valueAxis: AxisNames) => {
+const getScales = (chartSizeParams: ChartSizeParams, chartSettings: BarChartSettings, range: ReturnType<typeof createBarRange>, valueAxis: AxisNames) => {
   const { size, margin } = chartSizeParams;
   const { width, height } = calcChartSize(size, margin);
 
+
+  const nameBandSettings = {
+    paddingInner: chartSettings.barWidth === BarWidth.THIN ? 0.9 : 0.05,
+    paddingOuter: 0.5,
+    align: 0.5
+  }
+
   const nameScale = scaleBand().range([0, valueAxis === AxisNames.Y ? width : height])
     .domain(range.name)
-    .paddingInner(0.5)
-    .paddingOuter(1)
+    .paddingInner(nameBandSettings.paddingInner)
+    .paddingOuter(nameBandSettings.paddingOuter)
+    .align(nameBandSettings.align)
+  
 
   const valueScaleRange = valueAxis === 'y' ? [height, 0] : [0, width];
   const valueScale = scaleLinear().range(valueScaleRange).domain([range.value.min, range.value.max]);
@@ -37,7 +46,7 @@ export const drawBarChart: DrawChart<BarsData, BarChartSettings, BarAxisParams> 
 
   const axisName = chartSettings.orientation === Orintation.HORIZONTAL ? AxisNames.X : AxisNames.Y;
 
-  const { valueScale, nameScale } = getScales(chartSizeParams, range, axisName);
+  const { valueScale, nameScale } = getScales(chartSizeParams, chartSettings, range, axisName);
 
   if (axisName === AxisNames.X) {
     drawNumberAxis(chartLayout.axis, valueScale, chartSizeParams, range.value, axisParams, AxisNames.X);

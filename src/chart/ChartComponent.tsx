@@ -86,4 +86,23 @@ export default styled(ChartComponent)`
     fill:  #000000;
     font-size: 12px;
   }
+
+  text {
+    font-family 'Montserrat';
+  }
+
+  
+
+  .bar-chart__chart__rect {
+    fill: #9077F5;
+  }
+
+  svg {
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+    image-rendering: pixelated;
+    -ms-interpolation-mode: nearest-neighbor;
+  }
 `;

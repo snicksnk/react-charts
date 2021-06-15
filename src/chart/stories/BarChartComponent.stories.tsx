@@ -2,7 +2,7 @@ import React from 'react';
 import { Story, Meta } from '@storybook/react';
 
 import ChartComponent, { ChartComponentProps } from '../ChartComponent';
-import { BarAxisParams, BarChartSettings, BarsData, Orintation } from '../BarChart/types';
+import { BarAxisParams, BarChartSettings, BarsData, BarWidth, Orintation } from '../BarChart/types';
 import { drawBarChart } from '../BarChart/draw';
 
 export default {
@@ -28,9 +28,9 @@ const Template: Story<ChartComponentProps<BarsData, BarChartSettings, BarAxisPar
 export const VerticalBarChart = Template.bind({});
 VerticalBarChart.args = {
   data: [
-    { value: 30, name: 'vasya' },
-    { value: 25, name: 'ivan' },
-    { value: 31, name: 'fedor' },
+    { value: 30, name: 'iOS' },
+    { value: 25, name: 'Android' },
+    { value: 31, name: 'Linux' },
   ],
   axisParams: {
     tickSettings: {
@@ -42,7 +42,8 @@ VerticalBarChart.args = {
     }
   },
   chartSettings: {
-    orientation: Orintation.VERTICAL
+    orientation: Orintation.VERTICAL,
+    barWidth: BarWidth.THIN,
   },
   drawChart: drawBarChart
 };
@@ -50,9 +51,9 @@ VerticalBarChart.args = {
 export const HorizontalBarChartWithoutGrid = Template.bind({});
 HorizontalBarChartWithoutGrid.args = {
   data: [
-    { value: 30, name: 'vasya' },
-    { value: 25, name: 'ivan' },
-    { value: 31, name: 'fedor' },
+    { value: 30, name: 'iOS' },
+    { value: 25, name: 'Android' },
+    { value: 31, name: 'Linux' },
   ],
   axisParams: {
     tickSettings: {
@@ -64,7 +65,8 @@ HorizontalBarChartWithoutGrid.args = {
     }
   },
   chartSettings: {
-    orientation: Orintation.HORIZONTAL
+    orientation: Orintation.HORIZONTAL,
+    barWidth: BarWidth.THIN,
   },
   drawChart: drawBarChart
 };

@@ -1,47 +1,24 @@
-import { scaleQuantize } from "d3-scale";
 import { AxisNames, ChartLayout, ChartSizeParams, NumberScale, WordScale } from "../common/types";
 import { calcChartSize } from "../Linechart/charta";
 import { BarChartSettings, BarScales, BarsData, BarValue } from "./types";
 
 export function drawData(chartLayout: ChartLayout, data: BarsData, scales: BarScales, chartSettings: BarChartSettings, chartSizeParams: ChartSizeParams, valueAxis: AxisNames) {
   const { chartCanvas } = chartLayout;
-  const lines = chartCanvas.selectAll<SVGRectElement, Array<BarValue>>(".rect").data(data);
+  const lines = chartCanvas.selectAll<SVGRectElement, Array<BarValue>>(".bar-chart__chart__rect").data(data);
 
   const { size, margin } = chartSizeParams
 
   const chartSize = calcChartSize(size, margin);
 
-  const getLineColor = scaleQuantize<string, string>()
-    .domain([0, data.length])
-    .range([
-      '#9077F5',
-      '#B7A5FF',
-      '#A951DF',
-      '#D89DFD',
-      '#F372C7',
-      '#F897D7',
-      '#F79031',
-      '#FEAC60',
-      '#95D354',
-      '#C7EAA3',
-      '#FF7D8D',
-      '#FFAAB4',
-      '#33B5A5',
-      '#50DAC9',
-      '#4081FF',
-      '#8FB5FF']);
-
-
   const lineCreate = lines.enter()
     .append('rect')
-    .attr('class', 'rect')
-
+    .attr('class', 'bar-chart__chart__rect')
 
 
   const lineUpdate = lineCreate.merge(lines)
-    .attr('fill', (_, k) => {
-      return getLineColor(k);
-    })
+    // .attr('fill', (_, k) => {
+    //   return getLineColor(k);
+    // })
    
   if (valueAxis === AxisNames.Y) {
     lineUpdate

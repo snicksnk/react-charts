@@ -28,9 +28,15 @@ export enum Orintation {
   HORIZONTAL = 'HORIZONTAL'
 }
 
+export enum BarWidth {
+  WIDE = 'WIDE',
+  THIN = 'THIN'
+}
+
 // TODO add generic here
 export interface BarChartSettings {
   orientation: Orintation
+  barWidth: BarWidth
 }
 
 export type BarsData = Array<BarValue>;
