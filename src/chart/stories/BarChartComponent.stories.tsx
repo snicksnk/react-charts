@@ -31,6 +31,8 @@ VerticalBarChart.args = {
     { value: 30, name: 'iOS' },
     { value: 25, name: 'Android' },
     { value: 31, name: 'Linux' },
+    { value: 12, name: 'Windows' },
+    { value: 5, name: 'Solaris' }
   ],
   axisParams: {
     tickSettings: {
@@ -43,6 +45,29 @@ VerticalBarChart.args = {
   },
   chartSettings: {
     orientation: Orintation.VERTICAL,
+    barWidth: BarWidth.WIDE,
+  },
+  drawChart: drawBarChart
+};
+
+export const ThinHorizontalBarChart = Template.bind({});
+ThinHorizontalBarChart.args = {
+  data: [
+    { value: 30, name: 'iOS' },
+    { value: 25, name: 'Android' },
+    { value: 31, name: 'Linux' },
+  ],
+  axisParams: {
+    tickSettings: {
+      step: {
+      }
+    },
+    showGrid: {
+      x: true
+    }
+  },
+  chartSettings: {
+    orientation: Orintation.HORIZONTAL,
     barWidth: BarWidth.THIN,
   },
   drawChart: drawBarChart
@@ -61,12 +86,12 @@ HorizontalBarChartWithoutGrid.args = {
       }
     },
     showGrid: {
-      y: false
+      x: false
     }
   },
   chartSettings: {
     orientation: Orintation.HORIZONTAL,
-    barWidth: BarWidth.THIN,
+    barWidth: BarWidth.WIDE,
   },
   drawChart: drawBarChart
 };
