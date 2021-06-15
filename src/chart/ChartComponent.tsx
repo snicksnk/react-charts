@@ -67,6 +67,7 @@ export default styled(ChartComponent)`
     stroke-width: 4px;
   }
 
+
   .grid-line {
     stroke: #E0E0E0;
     stroke-width: 2px;
@@ -75,6 +76,10 @@ export default styled(ChartComponent)`
   .axis .tick line, .axis .domain{
     stroke: #E0E0E0;
     stroke-width: 2px;
+  }
+
+  .axis .domain {
+    stroke: none;
   }
 
   .axis .tick text {

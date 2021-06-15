@@ -35,8 +35,6 @@ export function drawData(chartLayout: ChartLayout, data: BarsData, scales: BarSc
   const lineCreate = lines.enter()
     .append('rect')
     .attr('class', 'rect')
-    .attr("stroke", "black")
-    .attr('fill', 'red');
 
 
 
@@ -68,7 +66,4 @@ export function drawData(chartLayout: ChartLayout, data: BarsData, scales: BarSc
   }
 
   lines.exit().remove();
-
-
-
 }
