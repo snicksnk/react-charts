@@ -1,10 +1,10 @@
 import { BarAxisParams, BarChartSettings, BarWidth, Orintation } from "../BarChart/types";
 import { max } from "d3-array";
 import { calcChartSize } from "../Linechart/charta";
-import { scaleBand, scaleLinear, scaleOrdinal } from "d3-scale";
+import { scaleBand, scaleLinear } from "d3-scale";
 import { drawNumberAxis, drawWordsAxis } from "../common/axis";
 import { AxisNames, ChartSizeParams, DrawChart } from "../common/types";
-import { ClusteredBarData } from "./types";
+import { ClusteredBarChartSettings, ClusteredBarData } from "./types";
 import { drawData } from "./drawData";
 
 function onlyUnique(value: string, index: number, self: Array<string>) {
@@ -57,7 +57,7 @@ const getScales = (chartSizeParams: ChartSizeParams, chartSettings: BarChartSett
   return { valueScale, groupNamesScale, barNamesScale }
 }
 
-export const drawClusteredBarChart: DrawChart<ClusteredBarData, BarChartSettings, BarAxisParams> = (chartLayout, data, chartSizeParams, chartSettings, axisParams) => {
+export const drawClusteredBarChart: DrawChart<ClusteredBarData, ClusteredBarChartSettings, BarAxisParams> = (chartLayout, data, chartSizeParams, chartSettings, axisParams) => {
   const range = createBarRange(data);
 
 

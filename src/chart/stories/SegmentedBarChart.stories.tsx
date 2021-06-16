@@ -2,9 +2,8 @@ import React from 'react';
 import { Story, Meta } from '@storybook/react';
 
 import ChartComponent, { ChartComponentProps } from '../ChartComponent';
-import { BarAxisParams, BarChartSettings, BarsData, BarWidth, Orintation } from '../BarChart/types';
-import { drawBarChart } from '../BarChart/draw';
-import { ClusteredBarData } from '../SegmentedBarChart/types';
+import { BarAxisParams, BarWidth, Orintation } from '../BarChart/types';
+import { ClusteredBarChartSettings, ClusteredBarData, ClusterType } from '../SegmentedBarChart/types';
 import { drawClusteredBarChart } from '../SegmentedBarChart/draw';
 
 export default {
@@ -16,7 +15,7 @@ export default {
 } as Meta;
 
 
-const Template: Story<ChartComponentProps<ClusteredBarData, BarChartSettings, BarAxisParams>> = (args) => <ChartComponent {...args} />;
+const Template: Story<ChartComponentProps<ClusteredBarData, ClusteredBarChartSettings, BarAxisParams>> = (args) => <ChartComponent {...args} />;
 
 export const VerticalBarChart = Template.bind({});
 VerticalBarChart.args = {
@@ -101,6 +100,3 @@ HorizontalThinBarChart.args = {
   },
   drawChart: drawClusteredBarChart
 };
-
-
-

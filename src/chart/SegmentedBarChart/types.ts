@@ -1,4 +1,4 @@
-import { BarValue } from "../BarChart/types"
+import { BarChartSettings, BarValue  } from "../BarChart/types"
 import { NumberScale, WordScale } from "../common/types"
 
 export type ClusterBarGroupValue = {
@@ -18,3 +18,7 @@ export type ClusteredBarScales = {
   names: { groups: WordScale, bars: WordScale },
   values: NumberScale,
 }
+
+export interface ClusteredBarChartSettings extends BarChartSettings {
+}
+
