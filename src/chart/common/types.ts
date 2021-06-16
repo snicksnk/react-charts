@@ -56,6 +56,7 @@ export type RangeWords = string[];
 export type NumberScale = ScaleLinear<number, number, number>;
 export type WordScale = ScaleBand<string>;
 
+// export type ClusterWordScales = { groupNamesScale: WordScale, barNamesScale: WordScale };
 
 export type LayoutGrid = Selection<SVGGElement, unknown, null, undefined>;
 export type LayoutAxis = Selection<SVGGElement, unknown, null, undefined>;
