@@ -4,10 +4,10 @@ import { Story, Meta } from '@storybook/react';
 import ChartComponent, { ChartComponentProps } from '../ChartComponent';
 import { BarAxisParams, BarWidth, Orintation } from '../BarChart/types';
 import { ClusteredBarChartSettings, ClusteredBarData } from '../SegmentedBarChart/types';
-import { drawClusteredBarChart } from '../SegmentedBarChart/draw';
+import { drawClusteredBarChart } from '../GroupedBarChart/draw';
 
 export default {
-  title: 'Example/ClusteredBarChart',
+  title: 'Example/StackedBarChart',
   component: ChartComponent,
   argTypes: {
     className: { control: 'string' },
@@ -17,33 +17,30 @@ export default {
 
 const Template: Story<ChartComponentProps<ClusteredBarData, ClusteredBarChartSettings, BarAxisParams>> = (args) => <ChartComponent {...args} />;
 
-export const VerticalBarChart = Template.bind({});
-VerticalBarChart.args = {
+export const VerticalStackedBarChart = Template.bind({});
+VerticalStackedBarChart.args = {
   data: [{
     groupName: 'iOS',
     bars: [
-      { value: 30, name: 'Phone' },
+      { value: 10, name: 'Phone' },
       { value: 20, name: 'Tablet' },
-      { value: 60, name: 'SmartCloks' },
-      { value: 17, name: 'Desktop' },
+      { value: 40, name: 'Smart clocks' },
     ],
   },
   {
     groupName: 'Android',
     bars: [
-      { value: 24, name: 'Phone' },
-      { value: 45, name: 'Tablet' },
-      { value: 67, name: 'SmartCloks' },
-      { value: 17, name: 'Desktop' },
+      { value: 20, name: 'Phone' },
+      { value: 10, name: 'Tablet' },
+      { value: 20, name: 'Smart clocks' },
     ],
   },
   {
     groupName: 'Windows',
     bars: [
-      { value: 4, name: 'Phone' },
-      { value: 55, name: 'Tablet' },
-      { value: 37, name: 'SmartCloks' },
-      { value: 87, name: 'Desktop' },
+      { value: 23, name: 'Phone' },
+      { value: 50, name: 'Tablet' },
+      { value: 20, name: 'Smart clocks' },
     ],
   }
   ],
@@ -63,25 +60,30 @@ VerticalBarChart.args = {
   drawChart: drawClusteredBarChart
 };
 
-
-export const HorizontalThinBarChart = Template.bind({});
-HorizontalThinBarChart.args = {
+export const HorizontalStackedBarChart = Template.bind({});
+HorizontalStackedBarChart.args = {
   data: [{
     groupName: 'iOS',
     bars: [
-      { value: 30, name: 'Phone' },
+      { value: 10, name: 'Phone' },
       { value: 20, name: 'Tablet' },
-      { value: 60, name: 'SmartCloks' },
-      { value: 17, name: 'Desktop' },
+      { value: 20, name: 'Smart clocks' },
     ],
   },
   {
     groupName: 'Android',
     bars: [
-      { value: 24, name: 'Phone' },
-      { value: 45, name: 'Tablet' },
-      { value: 67, name: 'SmartCloks' },
-      { value: 17, name: 'Desktop' },
+      { value: 13, name: 'Phone' },
+      { value: 30, name: 'Tablet' },
+      { value: 20, name: 'Smart clocks' },
+    ],
+  },
+  {
+    groupName: 'Windows',
+    bars: [
+      { value: 23, name: 'Phone' },
+      { value: 30, name: 'Tablet' },
+      { value: 20, name: 'Smart clocks' },
     ],
   }
   ],
@@ -91,12 +93,12 @@ HorizontalThinBarChart.args = {
       }
     },
     showGrid: {
-      x: true
+      y: true
     }
   },
   chartSettings: {
     orientation: Orintation.HORIZONTAL,
-    barWidth: BarWidth.THIN,
+    barWidth: BarWidth.WIDE,
   },
   drawChart: drawClusteredBarChart
 };

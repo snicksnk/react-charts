@@ -2,8 +2,7 @@ import React from 'react';
 import { Story, Meta } from '@storybook/react';
 
 import ChartComponent, { ChartComponentProps } from '../ChartComponent';
-import { BarAxisParams, BarChartSettings, BarsData, BarWidth, Orintation } from '../BarChart/types';
-import { drawBarChart } from '../BarChart/draw';
+import { BarAxisParams, BarChartSettings, BarWidth, Orintation } from '../BarChart/types';
 import { drawGantChart } from '../GantChart/draw';
 import { GantData } from '../GantChart/types';
 
