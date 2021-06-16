@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/react';
 
 import ChartComponent, { ChartComponentProps } from '../ChartComponent';
 import { BarAxisParams, BarWidth, Orintation } from '../BarChart/types';
-import { ClusteredBarChartSettings, ClusteredBarData, ClusterType } from '../SegmentedBarChart/types';
+import { ClusteredBarChartSettings, ClusteredBarData } from '../SegmentedBarChart/types';
 import { drawClusteredBarChart } from '../SegmentedBarChart/draw';
 
 export default {
