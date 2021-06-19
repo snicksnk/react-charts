@@ -2,11 +2,11 @@ import { AxisNames, ChartLayout, ChartSizeParams } from "../common/types";
 import { calcChartSize } from "../Linechart/charta";
 import { BarChartSettings, BarValue } from "../BarChart/types";
 import { ClusteredBarData, ClusteredBarScales } from "../SegmentedBarChart/types";
-import { colorThemeElements} from "../common/scales";
 import { scaleQuantize } from "d3-scale";
 import { createBarRange } from "./draw";
+import { ChartTheme } from "../theme/types";
 
-export function drawData(chartLayout: ChartLayout, data: ClusteredBarData, scales: ClusteredBarScales, chartSettings: BarChartSettings, chartSizeParams: ChartSizeParams, valueAxis: AxisNames, range: ReturnType<typeof createBarRange>) {
+export function drawData(chartLayout: ChartLayout, data: ClusteredBarData, scales: ClusteredBarScales, chartSettings: BarChartSettings, chartSizeParams: ChartSizeParams, valueAxis: AxisNames, range: ReturnType<typeof createBarRange>, theme: ChartTheme ) {
   const { chartCanvas } = chartLayout;
   const { size, margin } = chartSizeParams
   const chartSize = calcChartSize(size, margin);
@@ -28,7 +28,7 @@ export function drawData(chartLayout: ChartLayout, data: ClusteredBarData, scale
   const groupUpdate = groupCreate.merge(group)
   const colorScale = scaleQuantize<string, string>()
     .domain([0, scales.names.bars.domain().length])
-    .range(colorThemeElements);
+    .range(theme.chart.colors.range);
   
   const rect = groupUpdate
     .selectAll<SVGRectElement, Array<BarValue>>('.clustered-bar-chart__chart__group__rect')

@@ -1,5 +1,6 @@
 import { ScaleBand, ScaleLinear } from "d3-scale";
 import { Selection } from "d3-selection";
+import { ChartTheme } from "../theme/types";
 
 
 export type SVG = Selection<SVGSVGElement, unknown, null, undefined>;
@@ -38,7 +39,7 @@ export interface ChartSizeParams {
 
 export type Data<D> = Array<D>
 
-export type DrawChart<DATA_TYPE, CHART_SETTINGS, AXIS_PARAMS> = (chartLayout: ChartLayout, data: DATA_TYPE, chartSizeParams: ChartSizeParams, chartSettings: CHART_SETTINGS, axisParams: AXIS_PARAMS) => void
+export type DrawChart<DATA_TYPE, CHART_SETTINGS, AXIS_PARAMS> = (chartLayout: ChartLayout, data: DATA_TYPE, chartSizeParams: ChartSizeParams, chartSettings: CHART_SETTINGS, axisParams: AXIS_PARAMS, theme: ChartTheme) => void
 
 
 export enum AxisNames {

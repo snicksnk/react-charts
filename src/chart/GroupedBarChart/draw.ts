@@ -76,7 +76,7 @@ const getScales = (chartSizeParams: ChartSizeParams, chartSettings: BarChartSett
   return { valueScale, groupNamesScale, barNamesScale }
 }
 
-export const drawClusteredBarChart: DrawChart<ClusteredBarData, ClusteredBarChartSettings, BarAxisParams> = (chartLayout, data, chartSizeParams, chartSettings, axisParams) => {
+export const drawClusteredBarChart: DrawChart<ClusteredBarData, ClusteredBarChartSettings, BarAxisParams> = (chartLayout, data, chartSizeParams, chartSettings, axisParams, theme) => {
   const range = createBarRange(data);
 
 
@@ -95,5 +95,5 @@ export const drawClusteredBarChart: DrawChart<ClusteredBarData, ClusteredBarChar
     // drawData(chartLayout, data, { x: groupNamesScale, y: valueScale }, chartSettings, chartSizeParams, axisName);
   }
 
-  drawData(chartLayout, data, { values: valueScale, names: { bars: barNamesScale, groups: groupNamesScale } }, chartSettings, chartSizeParams, axisName, range);
+  drawData(chartLayout, data, { values: valueScale, names: { bars: barNamesScale, groups: groupNamesScale } }, chartSettings, chartSizeParams, axisName, range, theme);
 }

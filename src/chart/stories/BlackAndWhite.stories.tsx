@@ -7,14 +7,15 @@ import { ClusteredBarChartSettings, ClusteredBarData } from '../SegmentedBarChar
 import { drawClusteredBarChart } from '../GroupedBarChart/draw';
 import ChartThemeProvider from '../theme/ChartThemeProvider'; 
 import ColoredTheme from '../theme/presets/colored';
+import BlackWhiteTheme from '../theme/presets/blackWhite';
 
 
 export default {
-  title: 'Example/StackedBarChart',
+  title: 'Example/BlackAndWhite',
   component: ChartComponent,
   decorators: [
     (Story) => (
-      <ChartThemeProvider theme={ColoredTheme}>
+      <ChartThemeProvider theme={BlackWhiteTheme}>
         <Story />
       </ChartThemeProvider>
     ),

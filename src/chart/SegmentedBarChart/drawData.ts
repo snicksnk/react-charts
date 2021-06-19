@@ -10,7 +10,7 @@ export function drawData(chartLayout: ChartLayout, data: ClusteredBarData, scale
   const { size, margin } = chartSizeParams
   const chartSize = calcChartSize(size, margin);
 
-
+  
   const group = chartCanvas.selectAll<SVGGElement, Array<BarValue>>(".clustered-bar-chart__chart__group").data(data);
 
   const groupCreate = group.enter()

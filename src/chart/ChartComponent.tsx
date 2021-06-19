@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import styled from 'styled-components/macro';
+import styled, { useTheme } from 'styled-components/macro';
 import { ChartLayout, ChartSizeParams, DrawChart } from './common/types';
 import { createChart, resizeChart } from './Linechart/charta';
+import { ChartTheme } from './theme/types';
 
 export type ChartComponentProps<DATA_TYPE, CHART_SETTINGS, AXIS_PARAMS > = {
   className: string,
@@ -16,6 +17,8 @@ export const ChartComponent: React.FC<ChartComponentProps<any, any, any>> = ({ c
   const svgRef = useRef<HTMLDivElement | null>(null);
 
   const chartLayout = useRef<ChartLayout | null>(null);
+
+  const theme = useTheme();
 
   useEffect(() => {
     const margin = { top: 50, right: 60, bottom: 50, left: 60, axisOffset: 0 };
@@ -33,7 +36,7 @@ export const ChartComponent: React.FC<ChartComponentProps<any, any, any>> = ({ c
         chartLayout.current = createChart(svgRef.current, createChartSizeParams(width, height));
       }
 
-      drawChart(chartLayout.current, data, createChartSizeParams(width, height), chartSettings, axisParams);
+      drawChart(chartLayout.current, data, createChartSizeParams(width, height), chartSettings, axisParams, (theme as ChartTheme));
 
       const onResize = () => {
         const width = svgRef.current?.clientWidth || 0;
@@ -41,7 +44,7 @@ export const ChartComponent: React.FC<ChartComponentProps<any, any, any>> = ({ c
 
         if (chartLayout.current && width && height) {
           resizeChart(chartLayout.current, createChartSizeParams(width, height));
-          drawChart(chartLayout.current, data, createChartSizeParams(width, height), chartSettings, axisParams);
+          drawChart(chartLayout.current, data, createChartSizeParams(width, height), chartSettings, axisParams, (theme as ChartTheme));
         }
       };
 
@@ -51,7 +54,7 @@ export const ChartComponent: React.FC<ChartComponentProps<any, any, any>> = ({ c
       }
     }
 
-  }, [axisParams, data, chartSettings, drawChart]);
+  }, [axisParams, data, chartSettings, drawChart, theme]);
 
   return (<div className={className} ref={svgRef} style={{ width: '80%', height: '400px' }}>
   </div>)
@@ -69,7 +72,7 @@ export default styled(ChartComponent)`
 
 
   .grid-line {
-    stroke: #E0E0E0;
+    stroke: ${props => props.theme.axis.line.stroke};
     stroke-width: 2px;
   }
 
@@ -83,14 +86,13 @@ export default styled(ChartComponent)`
   }
 
   .axis .tick text {
-    fill:  #000000;
-    font-size: 12px;
+    fill:  ${props => props.theme.axis.ticks.fill};
+    font-size: ${props => props.theme.axis.ticks['font-size']};
   }
 
   text {
     font-family 'Montserrat';
   }
-
   
 
   .bar-chart__chart__rect {
