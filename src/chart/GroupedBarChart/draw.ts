@@ -71,7 +71,9 @@ const getScales = (chartSizeParams: ChartSizeParams, chartSettings: BarChartSett
 
 
   const valueScaleRange = valueAxis === 'y' ? [height, 0] : [0, width];
-  const valueScale = scaleLinear().range(valueScaleRange).domain([range.value.min, range.value.max]);
+  const valueScale = scaleLinear()
+    .range(valueScaleRange)
+    .domain([range.value.min, range.value.max])
 
   return { valueScale, groupNamesScale, barNamesScale }
 }
@@ -85,12 +87,12 @@ export const drawClusteredBarChart: DrawChart<ClusteredBarData, ClusteredBarChar
   const { valueScale, groupNamesScale, barNamesScale } = getScales(chartSizeParams, chartSettings, range, axisName);
 
   if (axisName === AxisNames.X) {
-    drawNumberAxis(chartLayout.axis, valueScale, chartSizeParams, range.value, axisParams, AxisNames.X);
+    drawNumberAxis(chartLayout.axis, valueScale, chartSizeParams, range.value, axisParams, AxisNames.X, theme);
     drawWordsAxis(chartLayout.axis, groupNamesScale, chartSizeParams, range.groupsNames, axisParams, AxisNames.Y);
 
     // drawData(chartLayout, data, { y: { groups: groupNamesScale, bars: barNamesScale }, x: valueScale }, chartSettings, chartSizeParams, axisName);
   } else {
-    drawNumberAxis(chartLayout.axis, valueScale, chartSizeParams, range.value, axisParams, AxisNames.Y);
+    drawNumberAxis(chartLayout.axis, valueScale, chartSizeParams, range.value, axisParams, AxisNames.Y, theme);
     drawWordsAxis(chartLayout.axis, groupNamesScale, chartSizeParams, range.groupsNames, axisParams, AxisNames.X);
     // drawData(chartLayout, data, { x: groupNamesScale, y: valueScale }, chartSettings, chartSizeParams, axisName);
   }
