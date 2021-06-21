@@ -104,6 +104,11 @@ HorizontalStackedBarChart.args = {
   }
   ],
   axisParams: {
+    titles: {
+      title: 'Bar chart',
+      x: 'Name',
+      y: 'Value'
+    },
     tickSettings: {
       step: {
       },
