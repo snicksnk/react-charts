@@ -20,6 +20,11 @@ export interface BarAxisParams {
   showGrid: {
     x?: boolean,
     y?: boolean
+  },
+  titles?: {
+    title?: string,
+    x?: string,
+    y?: string
   }
 }
 

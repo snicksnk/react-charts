@@ -48,6 +48,11 @@ VerticalBarChart.args = {
   }
   ],
   axisParams: {
+    titles: {
+      title: 'Bar chart',
+      x: 'Name',
+      y: 'Value'
+    },
     tickSettings: {
       step: {
       },
@@ -60,7 +65,7 @@ VerticalBarChart.args = {
     },
     showGrid: {
       y: true
-    }
+    },
   },
   chartSettings: {
     orientation: Orintation.VERTICAL,
