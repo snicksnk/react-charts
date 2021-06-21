@@ -1,10 +1,9 @@
-import React, { ReactNode } from 'react'
 import ReactMarkdown from 'react-markdown'
 import Tex from '@matejmazur/react-katex'
 import math from 'remark-math'
 import gfm from 'remark-gfm'
 import 'katex/dist/katex.min.css'; // `react-katex` does not import the CSS for you
-import styled, { DefaultTheme } from "styled-components/macro";
+import styled from "styled-components/macro";
 
 
 const renderers = {
@@ -18,7 +17,7 @@ interface ShowLatexProps {
   className?: string;
 }
 
-const ReactMarkdownStyled = styled(ReactMarkdown)`
+const ReactMarkdownStyled: any = styled(ReactMarkdown)`
   & p {
     margin-bottom: 0;
   }

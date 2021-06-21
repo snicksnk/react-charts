@@ -44,6 +44,12 @@ ChartWithCustomStepTicksAndCurve.args = {
     tickSettings: {
       step: {
         x: 5,
+      },
+      ticksList: {
+
+      },
+      ticksLatex: {
+
       }
     },
     showGrid: {
@@ -77,6 +83,12 @@ ChartWithDefaultTicks.args = {
   axisParams: {
     tickSettings: {
       step: {
+      },
+      ticksList: {
+
+      },
+      ticksLatex: {
+        
       }
     },
     showGrid: {

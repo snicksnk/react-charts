@@ -37,6 +37,12 @@ VerticalBarChart.args = {
   axisParams: {
     tickSettings: {
       step: {
+      },
+      ticksList: {
+
+      },
+      ticksLatex: {
+
       }
     },
     showGrid: {
@@ -60,6 +66,12 @@ ThinHorizontalBarChart.args = {
   axisParams: {
     tickSettings: {
       step: {
+      },
+      ticksList: {
+
+      },
+      ticksLatex: {
+
       }
     },
     showGrid: {
@@ -83,6 +95,12 @@ HorizontalBarChartWithoutGrid.args = {
   axisParams: {
     tickSettings: {
       step: {
+      },
+      ticksList: {
+
+      },
+      ticksLatex: {
+        
       }
     },
     showGrid: {

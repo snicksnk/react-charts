@@ -1,5 +1,6 @@
 import { Selection } from "d3-selection";
 import ReactDOMServer from 'react-dom/server';
+import { TicksSettings } from "../Linechart/types";
 import ChartThemeProvider from "../theme/ChartThemeProvider";
 import { ChartTheme } from "../theme/types";
 import ShowLatex from "./ShowLatex";
@@ -25,9 +26,8 @@ export const calculateTextSize = (document: Document) => (html: string, classNam
   return size;
 }
 
-export const drawLatex = (theme: ChartTheme, axisName: AxisNames) => (selection: Selection<SVGGElement, string, null, undefined>) => {
+export const drawLatex = (theme: ChartTheme, axisName: AxisNames, axisParams: TicksSettings) => (selection: Selection<SVGGElement, string, null, undefined>) => {
 
-  debugger;
   const latexForTicks: Record<string, string> = {};
   const tickHtmlSize: Record<string, Size> = {};
 
@@ -36,8 +36,10 @@ export const drawLatex = (theme: ChartTheme, axisName: AxisNames) => (selection:
 
   ticksBlocks.selectAll('.latex-block').remove();
 
-  ticksBlocks.each((d: any) => {
-    const text = `**${d}**`;
+
+
+  ticksBlocks.each((d: any, n) => {
+    const text = `${axisParams.ticksLatex?.[axisName]?.[n]}` || `${d}`;
     const html = ReactDOMServer.renderToStaticMarkup(<ChartThemeProvider theme={theme}>
       <ShowLatex>{text}</ShowLatex>
     </ChartThemeProvider>);

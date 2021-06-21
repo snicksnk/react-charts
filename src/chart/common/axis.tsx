@@ -13,7 +13,7 @@ export const drawNumberAxis = (axis: Axis, scale: NumberScale, chartSizeParams: 
   const { size, margin } = chartSizeParams
 
   const { width, height } = calcChartSize(size, margin);
-  const ticks = axisSteps(range, tickSettings.step?.[axisName]);
+  const ticks = axisSteps(range, tickSettings, axisName);
 
   const layoutAxis = axisName === 'y' ? axis.leftYAxis : axis.bottomXAxis;
   const layoutGrid = axisName === 'y' ? axis.gridY : axis.gridX;
@@ -45,10 +45,9 @@ export const drawNumberAxis = (axis: Axis, scale: NumberScale, chartSizeParams: 
       .tickValues(ticks);
     layoutAxis.call(axisX)
 
-
- 
-    layoutAxis.call(drawLatex(theme, axisName));
-
+    if (axisParams.tickSettings.ticksLatex?.[axisName]) {
+      layoutAxis.call((drawLatex(theme, axisName, axisParams.tickSettings) as any));
+    }
   }
 
 

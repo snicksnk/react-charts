@@ -38,6 +38,12 @@ GantChart.args = {
   axisParams: {
     tickSettings: {
       step: {
+      },
+      ticksList: {
+
+      },
+      ticksLatex: {
+        
       }
     },
     showGrid: {

@@ -1,9 +1,9 @@
 import { scaleLinear, scaleQuantize } from "d3-scale";
 import { select } from "d3-selection";
 import { axisLeft, axisBottom } from "d3-axis";
-import { LineAxisParams, AxisRange, LineChartSettings, Range, LineChartScales, LineCurveType, LineDotted } from "./types";
+import { LineAxisParams, AxisRange, LineChartSettings, Range, LineChartScales, LineCurveType, LineDotted, TicksSettings } from "./types";
 import { curveLinear, curveMonotoneX, line } from "d3-shape";
-import { ChartLayout, ChartMargins, ChartSizeParams, Size } from "../common/types";
+import { AxisNames, ChartLayout, ChartMargins, ChartSizeParams, Size } from "../common/types";
 import { LinesData } from "../axis";
 
 
@@ -79,15 +79,22 @@ export const createScales = (chartSizeParams: ChartSizeParams, ranges: AxisRange
   return { x, y };
 }
 
-export const axisSteps = (range: Range, stepFromConfig?: number) => {
-  const step = stepFromConfig || (range.max - range.min) / 4;
-  const ticks = (new Array(Math.ceil((range.max - range.min) / step))).fill(0).reduce((acc: Array<number>, _, k) => {
-    acc.push(range.min + k * step);
-    return acc;
-  }, [])
+export const axisSteps = (range: Range, axisConfig: TicksSettings, axisName: AxisNames) => {
+  const stepFromConfig = axisConfig.step?.[axisName];
+  const ticksListFromConfig = axisConfig.ticksList?.[axisName];
 
-  ticks.push(range.max);
-  return ticks;
+  if (ticksListFromConfig) {
+    return ticksListFromConfig;
+  } else {
+    const step = stepFromConfig || (range.max - range.min) / 4;
+    const ticks = (new Array(Math.ceil((range.max - range.min) / step))).fill(0).reduce((acc: Array<number>, _, k) => {
+      acc.push(range.min + k * step);
+      return acc;
+    }, [])
+
+    ticks.push(range.max);
+    return ticks;
+  }
 }
 
 export const drawAxis = (chartLayout: ChartLayout, scales: LineChartScales, chartSizeParams: ChartSizeParams, ranges: AxisRange, axisParams: LineAxisParams) => {
@@ -101,8 +108,8 @@ export const drawAxis = (chartLayout: ChartLayout, scales: LineChartScales, char
   const { width, height } = chartSize;
 
 
-  const ticksY = axisSteps(ranges.y, tickSettings.step?.y);
-  const ticksX = axisSteps(ranges.x, tickSettings.step?.x);
+  const ticksY = axisSteps(ranges.y, tickSettings, AxisNames.Y);
+  const ticksX = axisSteps(ranges.x, tickSettings, AxisNames.X);
 
   const axisY = axisLeft(scales.y).tickValues(ticksY);//.ticks(3, 'f')//.tickValues([ranges.y.min, (ranges.y.max - ranges.y.min) / 2, ranges.y.max]);
   const axisX = axisBottom(scales.x).tickValues(ticksX);
@@ -194,11 +201,11 @@ export function drawData(chartLayout: ChartLayout, data: LinesData, scales: Line
     .attr("stroke", "black")
     .attr('fill', 'none');
 
-  
+
 
   lineCreate.merge(lines)
     .attr("d", (d, n) => line<any>()
-      .curve(lineCurveType[(n as any)] === LineCurveType.CURVED ?  curveMonotoneX : curveLinear)
+      .curve(lineCurveType[(n as any)] === LineCurveType.CURVED ? curveMonotoneX : curveLinear)
       .x((d) => { return scales.x(d.x) })
       .y((d) => { return scales.y(d.y) })(d)
     )

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import styled, { useTheme } from 'styled-components/macro';
 import { ChartLayout, ChartSizeParams, DrawChart } from './common/types';
 import { createChart, resizeChart } from './Linechart/charta';
+import ColoredTheme from './theme/presets/colored';
 import { ChartTheme } from './theme/types';
 
 export type ChartComponentProps<DATA_TYPE, CHART_SETTINGS, AXIS_PARAMS > = {
@@ -62,10 +63,10 @@ export const ChartComponent: React.FC<ChartComponentProps<any, any, any>> = ({ c
 
 ChartComponent.defaultProps = {
   className: '',
-  data: []
+  data: [],
 }
 
-export default styled(ChartComponent)`
+const ChartComponentStyled = styled(ChartComponent)`
   .path {
     stroke-width: 4px;
   }
@@ -108,3 +109,9 @@ export default styled(ChartComponent)`
     -ms-interpolation-mode: nearest-neighbor;
   }
 `;
+
+ChartComponentStyled.defaultProps = {
+  theme: ColoredTheme
+}
+
+export default ChartComponentStyled;

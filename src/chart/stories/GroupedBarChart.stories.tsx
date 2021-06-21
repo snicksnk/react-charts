@@ -57,7 +57,13 @@ VerticalStackedBarChart.args = {
   axisParams: {
     tickSettings: {
       step: {
-      }
+      },
+      ticksList: {
+        x: [0, 18, 36, 54, 73],
+      },
+      ticksLatex: {
+        x: ['0', '**18**', '36', '54', '73'],
+      },
     },
     showGrid: {
       y: true
@@ -100,7 +106,13 @@ HorizontalStackedBarChart.args = {
   axisParams: {
     tickSettings: {
       step: {
-      }
+      },
+      ticksList: {
+        x: [0, 18, 36, 54, 73],
+      },
+      ticksLatex: {
+        x: ['0', '**18**', '36', '54', '73'],
+      },
     },
     showGrid: {
       y: true

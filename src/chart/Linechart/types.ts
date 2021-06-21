@@ -45,6 +45,14 @@ export type TicksSettings = {
   step: {
     x?: number,
     y?: number
+  },
+  ticksList: {
+    x?: Array<number>,
+    y?: Array<number>
+  },
+  ticksLatex: {
+    x?: Array<string>,
+    y?: Array<string>
   }
 }
 

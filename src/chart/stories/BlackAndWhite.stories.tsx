@@ -6,7 +6,6 @@ import { BarAxisParams, BarWidth, Orintation } from '../BarChart/types';
 import { ClusteredBarChartSettings, ClusteredBarData } from '../SegmentedBarChart/types';
 import { drawClusteredBarChart } from '../GroupedBarChart/draw';
 import ChartThemeProvider from '../theme/ChartThemeProvider'; 
-import ColoredTheme from '../theme/presets/colored';
 import BlackWhiteTheme from '../theme/presets/blackWhite';
 
 
@@ -58,7 +57,13 @@ VerticalStackedBarChart.args = {
   axisParams: {
     tickSettings: {
       step: {
-      }
+      },
+      ticksList: {
+        x: [0, 18, 36, 54, 73],
+      },
+      ticksLatex: {
+        x: ['0', '**18**', '36', '54', '73'],
+      },
     },
     showGrid: {
       y: true
@@ -101,7 +106,13 @@ HorizontalStackedBarChart.args = {
   axisParams: {
     tickSettings: {
       step: {
-      }
+      },
+      ticksList: {
+        x: [0, 18, 36, 54, 73],
+      },
+      ticksLatex: {
+        x: ['0', '**18**', '36', '54', '73'],
+      },
     },
     showGrid: {
       y: true

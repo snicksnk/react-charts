@@ -1,4 +1,4 @@
-import { BarAxisParams, BarChartSettings, BarsData, BarWidth, Orintation } from "../BarChart/types";
+import { BarAxisParams, BarChartSettings, BarWidth, Orintation } from "../BarChart/types";
 import { drawData } from "./drawData";
 import { max, min } from "d3-array";
 import { calcChartSize } from "../Linechart/charta";
@@ -41,7 +41,7 @@ const getScales = (chartSizeParams: ChartSizeParams, chartSettings: BarChartSett
   return { valueScale, nameScale }
 }
 
-export const drawGantChart: DrawChart<GantData, BarChartSettings, BarAxisParams> = (chartLayout, data, chartSizeParams, chartSettings, axisParams) => {
+export const drawGantChart: DrawChart<GantData, BarChartSettings, BarAxisParams> = (chartLayout, data, chartSizeParams, chartSettings, axisParams, theme) => {
   const range = createBarRange(data);
 
   const axisName = chartSettings.orientation === Orintation.HORIZONTAL ? AxisNames.X : AxisNames.Y;
@@ -49,11 +49,11 @@ export const drawGantChart: DrawChart<GantData, BarChartSettings, BarAxisParams>
   const { valueScale, nameScale } = getScales(chartSizeParams, chartSettings, range, axisName);
 
   if (axisName === AxisNames.X) {
-    drawNumberAxis(chartLayout.axis, valueScale, chartSizeParams, range.value, axisParams, AxisNames.X);
+    drawNumberAxis(chartLayout.axis, valueScale, chartSizeParams, range.value, axisParams, AxisNames.X, theme);
     drawWordsAxis(chartLayout.axis, nameScale, chartSizeParams, range.name, axisParams, AxisNames.Y);
     drawData(chartLayout, data, { y: nameScale, x: valueScale }, chartSettings, chartSizeParams, axisName);
   } else {
-    drawNumberAxis(chartLayout.axis, valueScale, chartSizeParams, range.value, axisParams, AxisNames.Y);
+    drawNumberAxis(chartLayout.axis, valueScale, chartSizeParams, range.value, axisParams, AxisNames.Y, theme);
     drawWordsAxis(chartLayout.axis, nameScale, chartSizeParams, range.name, axisParams, AxisNames.X);
     // drawAxis(chartLayout, scales, chartSizeParams, ranges, axisParams)
     drawData(chartLayout, data, { x: nameScale, y: valueScale }, chartSettings, chartSizeParams, axisName);
