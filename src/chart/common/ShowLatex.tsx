@@ -4,15 +4,65 @@ import math from 'remark-math'
 import gfm from 'remark-gfm'
 import 'katex/dist/katex.min.css'; // `react-katex` does not import the CSS for you
 import styled from "styled-components/macro";
+import ColoredTheme from '../theme/presets/colored';
+import { ChartComponent } from '../ChartComponent';
+import { drawClusteredBarChart } from '../GroupedBarChart/draw';
+import ChartThemeProvider from '../theme/ChartThemeProvider';
+import { DrawChart } from './types';
 
+
+
+
+const getChartComponent = (chartType: string): DrawChart<any, any, any> => {
+  switch(chartType) {
+    case('clusteredBarChart'): {
+      return drawClusteredBarChart;
+    }
+    default: {
+      throw new Error(`Unknown chart type ${chartType}`)
+    }
+  }
+}
+
+type MyImageProps = {
+  alt: string,
+  src: string
+}
+
+const MyImage = (props: MyImageProps) => {
+  //if (/^OtterChart/.ma)
+
+  if (props.alt === "OtterChart") {
+    const { chartType, params } = JSON.parse(props.src);
+    //const topicScore = props.src
+    return (
+      <div>
+        <ChartThemeProvider theme={ColoredTheme}>
+          <ChartComponent
+            className=''
+            {...params}
+            drawChart={getChartComponent(chartType)}
+          />
+        </ChartThemeProvider>
+      </div>
+    );
+  } else {
+    return (
+      <p>
+        <img className={"small"} alt={props.alt} src={props.src} />
+      </p>
+    );
+  }
+};
 
 const renderers = {
   inlineMath: ({ value }: any) => <Tex math={value} />,
-  math: ({ value }: any) => <Tex block math={value} />
+  math: ({ value }: any) => <Tex block math={value} />,
+  image: MyImage
 }
 
 
-interface ShowLatexProps {
+export interface ShowLatexProps {
   children: string;
   className?: string;
 }
@@ -51,8 +101,13 @@ const ReactMarkdownStyled: any = styled(ReactMarkdown)`
 
 
 
+ReactMarkdownStyled.defaultProps = {
+  theme: ColoredTheme
+}
+
+
+
 const ShowLatex = ({ children, className }: ShowLatexProps) => {
-  debugger;
   return (
     <ReactMarkdownStyled
       // className={className || ''}

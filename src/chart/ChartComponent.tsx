@@ -18,7 +18,6 @@ export const ChartComponent: React.FC<ChartComponentProps<any, any, any>> = ({ c
   const svgRef = useRef<HTMLDivElement | null>(null);
 
   const chartLayout = useRef<ChartLayout | null>(null);
-
   const theme = useTheme();
 
   useEffect(() => {
