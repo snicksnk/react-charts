@@ -1,10 +1,13 @@
-import { scaleLinear, scaleQuantize } from "d3-scale";
+import { scaleLinear, scaleQuantize, scaleSequential } from "d3-scale";
 import { select } from "d3-selection";
 import { axisLeft, axisBottom } from "d3-axis";
 import { LineAxisParams, AxisRange, LineChartSettings, Range, LineChartScales, LineCurveType, LineDotted, TicksSettings } from "./types";
-import { curveLinear, curveMonotoneX, line } from "d3-shape";
+import { curveLinear, curveLinearClosed, curveMonotoneX, line, curveBasis, curveNatural, curveMonotoneY, curveBundle } from "d3-shape";
 import { AxisNames, ChartLayout, ChartMargins, ChartSizeParams, Size } from "../common/types";
 import { LinesData } from "../axis";
+import { min, max, minIndex, maxIndex } from "d3-array";
+import { drawLateCustom, drawLatex } from "../common/utils";
+import { ColorRangeType } from "../theme/types";
 
 
 
@@ -35,6 +38,35 @@ export function createChart(ref: HTMLDivElement, chartSizeParams: ChartSizeParam
   const chartCanvas = svg
     .append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+  const defs = svg.append('defs');
+
+  const gradient = defs.append('linearGradient')
+  .attr('id', 'svgGradient')
+  .attr('x1', '0%')
+  .attr('x2', '100%')
+  .attr('y1', '100%')
+  .attr('y2', '100%');
+
+  gradient.append('stop')
+  .attr('class', 'start')
+  .attr('offset', '0%')
+  .attr('stop-color', '#dbe4f8')
+  .attr('stop-opacity', 1);
+
+
+  gradient.append('stop')
+  .attr('class', 'end')
+  .attr('offset', '70%')
+  .attr('stop-color', '#baece4')
+  .attr('stop-opacity', 1);
+
+
+  gradient.append('stop')
+  .attr('class', 'end')
+  .attr('offset', '100%')
+  .attr('stop-color', '#baece4')
+  .attr('stop-opacity', 1);
 
 
   const axis = {
@@ -141,7 +173,30 @@ export const drawAxis = (chartLayout: ChartLayout, scales: LineChartScales, char
   gridX.exit().remove();
 
   axis.leftYAxis.call(axisY);
-  axis.bottomXAxis.call(axisX)
+  axis.bottomXAxis.call(axisX);
+  axis.bottomXAxis.call(axisX);
+  
+  if (axisParams.tickSettings.ticksLatex?.x) {
+    axis.bottomXAxis.call(drawLateCustom({
+      axis: {
+        line: {
+          stroke: 'red',
+        },
+        ticks: {
+          fill: 'red',
+          'font-size': '12px'
+        }
+      },
+      chart: {
+        colors: {
+          type: ColorRangeType.quantize,
+          range: ['red']
+        }
+      }
+    }, AxisNames.X, axisParams.tickSettings) as any)
+  } else {
+
+  }
 }
 
 
@@ -162,6 +217,10 @@ export function drawData(chartLayout: ChartLayout, data: LinesData, scales: Line
 
   // const circles = chartCanvas.selectAll<SVGGElement, D>(".dot").data(coords)
 
+
+  // const dataWithExtras = [  ...data];
+
+
   const lines = chartCanvas.selectAll<SVGPathElement, LinesData>(".path").data(data);
 
 
@@ -173,22 +232,10 @@ export function drawData(chartLayout: ChartLayout, data: LinesData, scales: Line
   const getLineColor = scaleQuantize<string, string>()
     .domain([0, data.length])
     .range([
-      '#9077F5',
-      '#B7A5FF',
-      '#A951DF',
-      '#D89DFD',
-      '#F372C7',
-      '#F897D7',
-      '#F79031',
-      '#FEAC60',
-      '#95D354',
-      '#C7EAA3',
-      '#FF7D8D',
-      '#FFAAB4',
-      '#33B5A5',
-      '#50DAC9',
-      '#4081FF',
-      '#8FB5FF']);
+      '#3b7eb7',
+      '#7c747414',
+      '#94a9bc',
+    ]);
 
   // axis.leftYAxis.call(axisY);
   // axis.bottomXAxis.call(axisX)
@@ -205,7 +252,7 @@ export function drawData(chartLayout: ChartLayout, data: LinesData, scales: Line
 
   lineCreate.merge(lines)
     .attr("d", (d, n) => line<any>()
-      .curve(lineCurveType[(n as any)] === LineCurveType.CURVED ? curveMonotoneX : curveLinear)
+      .curve(lineCurveType[(n as any)] === LineCurveType.CURVED ? curveLinear : curveLinear)
       .x((d) => { return scales.x(d.x) })
       .y((d) => { return scales.y(d.y) })(d)
     )
@@ -216,19 +263,124 @@ export function drawData(chartLayout: ChartLayout, data: LinesData, scales: Line
 
   lines.exit().remove();
 
-  // const dot = circles
-  //   .enter()
-  //   .append("g")
-  //   .attr('class', 'dot')
-  // // .attr('transform', d => `translate(${d.x}, ${d.y})`);
+}
 
-  // dot.merge(circles).attr('transform', d => `translate(${d.x}, ${d.y})`);
 
-  // // circles
-  // ;
 
-  // dot.append('circle')
-  //   .attr("r", d => d.r)
-  //   .attr('fill', d => d.fill)
 
+export function drawFill(chartLayout: ChartLayout, data: LinesData, scales: LineChartScales, chartSettings: LineChartSettings, axisParams: LineAxisParams) {
+  const { chartCanvas } = chartLayout;
+
+
+  const getLineColor = scaleQuantize<string, string>()
+  .domain([0, data.length])
+  .range([
+    '#9077F5',
+    '#B7A5FF',
+    '#A951DF',
+    '#D89DFD',
+    '#F372C7',
+    '#F897D7',
+    '#F79031',
+    '#FEAC60',
+    '#95D354',
+    '#C7EAA3',
+    '#FF7D8D',
+    '#FFAAB4',
+    '#33B5A5',
+    '#50DAC9',
+    '#4081FF',
+    '#8FB5FF']);
+
+
+
+  // const dataWithExtras = [ { x: data[0][0]?.x, y: 0 }, ...data];
+
+
+ 
+
+  const fill = chartCanvas.selectAll<SVGPathElement, LinesData>(".fill").data(data.slice(0,1).map(dots => {
+    
+    const minX = min(dots.map(d => d.x));
+    const maxX = max(dots.map(d => d.y));
+
+    const minY = min(dots.map(d => d.y))
+
+    const minPoint = {
+      x: minX,
+      y: minY
+    }
+
+    // const maxPoint = {
+    //   x: maxX,
+    //   y: minY
+    // }
+
+
+    const endPoint = {
+      x: dots[axisParams.now || 0].x,
+      y: minY,
+    }
+
+    debugger;
+
+    return [ minPoint, ...dots.slice(0, axisParams.now + 1), endPoint];
+  }));
+
+  // axis.leftYAxis.call(axisY);
+  // axis.bottomXAxis.call(axisX)
+  //svg.call(axisY);
+
+
+  const fillCreate = fill.enter()
+    .append('path')
+    .attr('class', 'fill')
+    .attr("stroke", "none")
+    .attr('fill', "url(#svgGradient)");
+
+
+
+    fillCreate.merge(fill)
+    .attr("d", (d, n) => line<any>()
+      .curve(curveLinear)
+      .x((d) => { return scales.x(d.x) })
+      .y((d) => { return scales.y(d.y) })(d)
+    )
+    // .attr('stroke-dasharray', (d, n) => lineDotted[(n as any)] === LineDotted.DOTTED ? '4' : '0')
+
+    fill.exit().remove();
+
+
+
+}
+
+
+export function drawCircle(chartLayout: ChartLayout, data: LinesData, scales: LineChartScales, chartSettings: LineChartSettings, axisParams: LineAxisParams) {
+  const { chartCanvas } = chartLayout;
+
+  const dots = data[0];
+  const point = {
+    x: dots[axisParams.now || 0].x,
+    y: dots[axisParams.now || 0].y,
+  }
+
+  const circle = chartCanvas.selectAll<SVGCircleElement, LinesData>(".dot").data([point])
+
+  const dot = circle
+    .enter()
+    .append("g")
+    .attr('class', 'dot')
+    .attr('fill', 'white')
+    .attr('stroke', '#3b7eb7')
+    .attr('stroke-width', 4)
+  // .attr('transform', d => `translate(${d.x}, ${d.y})`);
+
+  dot.merge(circle).attr('transform', d => `translate(${scales.x(d.x)}, ${scales.y(d.y)})`);
+
+  // circles
+  ;
+
+  dot.append('circle')
+    .attr("r", d => 7)
+    .attr('fill', d => d.fill)
 }

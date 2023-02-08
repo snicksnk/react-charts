@@ -6,12 +6,14 @@ export interface LineAxisParams {
     x: boolean,
     y: boolean
   }
+  now?: number,
 }
 
 // TODO add generic here
 export interface LineChartSettings {
   lineCurveType: Array<LineCurveType>
   lineDotted: Array<LineDotted>
+  showFill?: boolean
 }
 
 export enum LineDotted {
