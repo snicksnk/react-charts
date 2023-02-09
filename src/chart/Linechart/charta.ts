@@ -11,6 +11,8 @@ import { ColorRangeType } from "../theme/types";
 
 
 
+
+
 export function createChart(ref: HTMLDivElement, chartSizeParams: ChartSizeParams) {
   const { size, margin } = chartSizeParams;
   const { width, height } = size;
